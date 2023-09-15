@@ -21,7 +21,7 @@
                 <select asp-for="ContratoId.Id" class="form-select">
                     <option value=0>Eliga un Contrato</option>
                     @foreach(var item in Contratos){
-                            <option value=@item.Id>@item.ToString()</option>
+                            <option value=@item.Id>@item.Id.toString()</option>
                         }
                     
                 </select>

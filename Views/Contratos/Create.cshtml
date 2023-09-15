@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Crear Contrato";
-    var Usuarios = ViewBag.Usuarios;
+    var Inquilinos = ViewBag.Inquilinos;
     var Inmuebles = ViewBag.Inmuebles;
 }
 
@@ -26,8 +26,9 @@
                 <label  class="control-label text-light">Inquilino</label>
                 <select asp-for="InquilinoId.Id" class="form-select">
                     <option value=0>Eliga un inquilino</option>
-                    @{foreach(var item in Usuarios){
-                            @:<option value=@item.Id @(item.Id==ViewBag.Inquilino ? "selected" : "" )>@item.ToString() </option>
+                    @{foreach(var item in Inquilinos)
+                    {
+                            @:<option value=@item.Id @(item.Id==ViewBag.Inquilino ? "selected" : "" ) >Id:@item.Id | FullName:@item.UsuarioId.Nombre @item.UsuarioId.Apellido | DNI:@item.UsuarioId.DNI </option>
                         }
                     }
                 </select>
@@ -37,7 +38,7 @@
                 <select asp-for="InmuebleId.Id" class="form-select">
                     <option value=0>Eliga un Inmueble</option>
                     @{foreach(var item in Inmuebles){
-                            @:<option value=@item.Id @(item.Id==ViewBag.Inmueble ? "selected" : "" )>Id:@item.Id | Dueño: @item.PropietarioId.UsuarioId.ToString()</option>
+                            @:<option value=@item.Id @(item.Id==ViewBag.Inmueble ? "selected" : "" )>Id:@item.Id | Dueño:Id:@item.PropietarioId.UsuarioId.Id | FullName:@item.PropietarioId.UsuarioId.Nombre @item.PropietarioId.UsuarioId.Apellido | DNI:@item.PropietarioId.UsuarioId.DNI</option>
                         }
                     }
                 </select>

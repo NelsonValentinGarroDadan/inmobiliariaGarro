@@ -39,10 +39,11 @@ namespace inmobiliaria.Controllers
             var todosC = CR.ObtenerTodos();
             var todosP = PR.ObtenerTodos();
             List<Pagos> P = new List<Pagos>();
-            List<bool> condiciones = new List<bool>();
-
+            List<bool> condiciones ;
+            bool condicionFinal;
             for(int i = 0; i < todosP.Count ; i++){
-                bool condicionFinal = true;
+                condicionFinal = true;
+                condiciones = new List<bool>();
                 if( filtroContrato != 0 ) condiciones.Add(filtroContrato == todosC[i].TipoEstadoId.Id ); 
                 //if( DateTime.Compare(filtroFecha, new DateTime(0001, 01, 01,00,00,00))  != 0) condiciones.Add(DateTime.Compare(filtroFechaInicio,todosC[i].FechaInicio) == 0 ); 
                 if( filtroImporteMayor !=0 ) condiciones.Add(filtroImporteMayor < todosP[i].Importe ); 

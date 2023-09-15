@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using inmobiliaria.Models;
@@ -32,15 +33,18 @@ namespace inmobiliaria.Controllers
             var CR = new ContratosRepositorio();
             var TER = new TiposEstadosRepositorio();
             var IR = new InmueblesRepositorio();
+            var INR = new InquilinosRepositorio();
             ViewBag.Inmuebles = IR.ObtenerTodos();
             ViewBag.TiposEstados= TER.ObtenerTodos();
+            ViewBag.Inquilinos = INR.ObtenerTodos();
             //Logica de Filtrado
             var todosC = CR.ObtenerTodos();
             List<Contratos> C = new List<Contratos>();
-            List<bool> condiciones = new List<bool>();
-            
+            List<bool> condiciones;
+            bool condicionFinal;
             for(int i = 0; i < todosC.Count ; i++){
-                bool condicionFinal = true;
+                condicionFinal = true;
+                condiciones = new List<bool>();
                 if( filtroEstado != 0 ) condiciones.Add(filtroEstado == todosC[i].TipoEstadoId.Id ); 
                 if( filtroInquilino !=0 ) condiciones.Add(filtroInquilino == todosC[i].InquilinoId.Id ); 
                 if( filtroInmueble!= 0) condiciones.Add(filtroInmueble == todosC[i].InmuebleId.Id ); 
@@ -151,7 +155,7 @@ namespace inmobiliaria.Controllers
                     return RedirectToAction(nameof(Create));
                 }
                 for(int i = 0; i< todosC.Count;i++){
-                    if(DateTime.Compare(c.FechaInicio,todosC[i].FechaFin) < 0 || DateTime.Compare(c.FechaFin,todosC[i].FechaInicio) > 0){
+                    if(c.InmuebleId.Id==todosC[i].InmuebleId.Id && (DateTime.Compare(c.FechaInicio,todosC[i].FechaFin) > 0 || DateTime.Compare(c.FechaFin,todosC[i].FechaInicio) > 0)){
                         TempData["Mensaje"]="El inmueble esta Ocupado en esas fechas";
                         return RedirectToAction(nameof(Create));
                     }

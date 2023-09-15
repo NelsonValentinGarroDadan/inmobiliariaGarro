@@ -63,9 +63,9 @@
                 <label asp-for="TipoEstadoId" class="control-label text-light"></label>
                 <select asp-for="TipoEstadoId.Id" class="form-select">
                     @foreach(var item in TiposEstado){
-                         @if(item.Descripcion == "Habilitado" || item.Descripcion == "DesHabilitado" || item.Descripcion == "Ocupado" )
+                         @if(item.Descripcion == "Habilitado" || item.Descripcion == "DesHabilitado"  )
                         {
-                            <option value=@item.Id>@item.Descripcion</option>
+                            @:<option value=@item.Id @(item.Id==Model.TipoEstadoId.Id ? "selected" : "")>@item.Descripcion</option>
                         }
                     }
                 </select>

@@ -47,19 +47,19 @@ namespace inmobiliaria.Controllers
             var todosC = CR.ObtenerTodos();
 
             List<Inmuebles> I= new List<Inmuebles>();
-
-            List<bool> condiciones = new List<bool>();
-                
+            List<bool> condiciones;
+            bool condicionFinal;    
             for(int i = 0; i < todosI.Count ; i++)
             { 
-                bool condicionFinal = true;
+                condiciones = new List<bool>();
+                condicionFinal = true;
                 if(filtroEstado != 0) condiciones.Add(filtroEstado == todosI[i].TipoEstadoId.Id);
                 if(filtroPropietario !=0) condiciones.Add(filtroPropietario == todosI[i].PropietarioId.Id);
                 if(filtroCA!= 0) condiciones.Add(filtroCA == todosI[i].CA);
                 if(filtroTipoInmueble != 0 ) condiciones.Add(filtroTipoInmueble == todosI[i].TipoInmuebleId.Id);
                 if(filtroTipoUso != 0) condiciones.Add(filtroTipoUso == todosI[i].TipoUsoId.Id);
-                //if(DateTime.Compare(filtroFechaInicio, new DateTime(0001, 01, 01,00,00,00))  > 0) condiciones.Add(todosC[i].InmuebleId.Id == todosI[i].Id && DateTime.Compare(filtroFechaInicio,todosC[i].FechaFin) > 0);
-                //if(DateTime.Compare(filtroFechaFin, new DateTime(0001, 01, 01,00,00,00))  > 0) condiciones.Add(todosC[i].InmuebleId.Id == todosI[i].Id && DateTime.Compare(filtroFechaFin,todosC[i].FechaInicio) < 0);
+                //if(DateTime.Compare(filtroFechaInicio, new DateTime(0001, 01, 01,00,00,00))  > 0) condiciones.Add(todosC[i].InmuebleId.Id == todosI[i].Id && DateTime.Compare(filtroFechaInicio,todosC[i].FechaFin) > 0 && DateTime.Compare(filtroFechaInicio,todosI[i].FechaFin) > 0);
+                //if(DateTime.Compare(filtroFechaFin, new DateTime(0001, 01, 01,00,00,00))  > 0) condiciones.Add(todosC[i].InmuebleId.Id == todosI[i].Id && DateTime.Compare(filtroFechaFin,todosC[i].FechaInicio) < 0 && DateTime.Compare(filtroFechaFin,todosI[i].FechaInicio) < 0);
                 for(int j = 0; j<condiciones.Count;j++) condicionFinal= condicionFinal && condiciones[j];
                 if(condicionFinal) I.Add(todosI[i]);
             }
@@ -129,7 +129,7 @@ namespace inmobiliaria.Controllers
             if (i.PropietarioId.Id < 0)
             {
                 TempData["Mensaje"]="Debes Elegir un Propietario";
-                ModelState.AddModelError("UsuarioId.Id", "Debes Elegir un Propietario");
+                ModelState.AddModelError("PropietarioId.Id", "Debes Elegir un Propietario");
                 return RedirectToAction(nameof(Create));
             }
             if(i.CA < 0){

@@ -5,7 +5,7 @@
     
     var TiposUso = ViewBag.TiposUsos;
     var TiposEstado = ViewBag.TiposEstados;
-    var TiposInmuble = ViewBag.TiposInmueble;
+    var TiposInmueble = ViewBag.TiposInmueble;
     var Propietarios = ViewBag.Propietarios;
 
 }
@@ -23,7 +23,7 @@
                 <select class="form-select" name="filtroEstado">
                     <option value=0>Eliga un Estado</option>
                     @{foreach(var item in TiposEstado){
-                         @if(item.Descripcion == "Habilitado" || item.Descripcion == "DesHabilitado" || item.Descripcion == "Ocupado" )
+                         @if(item.Descripcion == "Habilitado" || item.Descripcion == "DesHabilitado")
                         {
                             @:<option value=@item.Id @(item.Id==ViewBag.filtroEstado ? "selected" : "") >@item.Descripcion</option>
                         }
@@ -45,7 +45,7 @@
                 <label  class="control-label text-light">Tipo de Inmueble</label>
                 <select  class="form-select" name="filtroTipoInmueble">
                     <option value=0>Eliga un tipo de Inmueble</option>
-                    @{foreach(var item in TiposInmuble){
+                    @{foreach(var item in TiposInmueble){
                             @:<option value=@item.Id @(item.Id==ViewBag.filtroTipoInmueble ? "selected" : "")>@item.Descripcion</option>
                         }
                     }
