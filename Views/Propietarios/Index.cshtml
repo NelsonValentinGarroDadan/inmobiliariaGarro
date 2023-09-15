@@ -1,0 +1,61 @@
+@model IEnumerable<inmobiliaria.Models.Inmuebles>
+
+@{
+    ViewData["Title"] = "Propietarios";
+}
+<h1 class="text-center text-light">Propietarios</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.PropietarioId.Id)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.PropietarioId.UsuarioId.DNI)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.PropietarioId.UsuarioId.Nombre)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.PropietarioId.UsuarioId.Apellido)
+            </th>
+            <th class="text-light">
+                Inmueble
+            </th>
+            <th class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-light"> 
+                @Html.DisplayFor(modelItem => item.PropietarioId.UsuarioId.Id)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.PropietarioId.UsuarioId.DNI)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.PropietarioId.UsuarioId.Nombre)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.PropietarioId.UsuarioId.Apellido)
+            </td>
+            <td class="text-light"> 
+                @Html.ActionLink("Detalles del Inmueble","Details","Inmuebles",new {id = item.Id})
+            </td>
+            <td class="text-light  d-flex flex-row justify-content-around align-items-center">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Usuario">
+                    <a asp-action="Details" asp-controller="Usuarios" asp-route-id=@item.PropietarioId.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Usuario">
+                    <a asp-action="Edit" asp-controller="Usuarios" asp-route-id=@item.PropietarioId.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Usuario">
+                    <a asp-action="Delete"  asp-route-id=@item.PropietarioId.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-user-slash"></i></button></a>
+                </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

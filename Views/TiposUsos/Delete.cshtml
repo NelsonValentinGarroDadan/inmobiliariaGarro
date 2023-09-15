@@ -1,0 +1,28 @@
+@model inmobiliaria.Models.TiposUsos
+
+@{
+    ViewData["Title"] = "Eliminar Tipo de Uso";
+}
+<h1 class="text-center text-light">Tipo de Usoo</h1> 
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button></a></h4>
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <p class="text-light"><b>Advertencia:</b> Si los datos del Tipo de Uso esta vinculado a alguna entidad, debe borrar esas entidades antes de poder borrar los datos del Tipo de Uso</p>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-5 text-light">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-7 text-light">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-5 text-light">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-7 text-light">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+</div>
+<form asp-action="Delete" id="delete">
+    <input type="submit" value="Eliminar" class="btn btn-danger" />
+</form>

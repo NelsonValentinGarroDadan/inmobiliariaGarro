@@ -1,0 +1,28 @@
+@model inmobiliaria.Models.TiposEstados
+
+@{
+    ViewData["Title"] = "Detalles del Tipo de Estado";
+}
+<h1 class="text-center text-light">Informacion del Tipo de Estado</h1> 
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button></a></h4>
+<div class="container d-flex flex-column justify-content-between align-items-center">
+   
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-5 text-light">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-7 text-light">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-5 text-light">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-7 text-light" >
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id=@Model.Id><button type="button" class="btn btn-warning" >Editar <i class="fa-regular fa-pen-to-square"></i></i></button></a>
+</div>

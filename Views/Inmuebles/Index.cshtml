@@ -1,0 +1,155 @@
+@model IEnumerable<inmobiliaria.Models.Inmuebles>
+
+@{
+    ViewData["Title"] = "Inmuebles";
+    
+    var TiposUso = ViewBag.TiposUsos;
+    var TiposEstado = ViewBag.TiposEstados;
+    var TiposInmuble = ViewBag.TiposInmueble;
+    var Propietarios = ViewBag.Propietarios;
+
+}
+
+<h1 class="text-center text-light">Inmuebles</h1>
+<p>
+    <a asp-action="Create"><button type="button" class="btn btn-secondary">Crear Inmueble <i class="fa-solid fa-plus"></i></button></a>
+</p>
+<p class="text-light">Filtros: </p>
+<div class="container">
+    
+    <form asp-action="Index" class="row">
+        <div class="form-group col-3">
+                <label class="control-label text-light">Estado</label>
+                <select class="form-select" name="filtroEstado">
+                    <option value=0>Eliga un Estado</option>
+                    @{foreach(var item in TiposEstado){
+                         @if(item.Descripcion == "Habilitado" || item.Descripcion == "DesHabilitado" || item.Descripcion == "Ocupado" )
+                        {
+                            @:<option value=@item.Id @(item.Id==ViewBag.filtroEstado ? "selected" : "") >@item.Descripcion</option>
+                        }
+                    }
+                    }
+                </select>
+            </div>
+        <div class="form-group col-3">
+                <label  class="control-label text-light">Propietario</label>
+                <select  class="form-select" name="filtroPropietario">
+                    <option value=0>Eliga un Propietario</option>
+                    @{foreach(var item in Propietarios){
+                            @:<option value=@item.Id @(item.Id==ViewBag.filtroPropietario ? "selected" : "")>@item.toString()</option>
+                        }
+                    }
+                </select>
+        </div>
+        <div class="form-group col-3">
+                <label  class="control-label text-light">Tipo de Inmueble</label>
+                <select  class="form-select" name="filtroTipoInmueble">
+                    <option value=0>Eliga un tipo de Inmueble</option>
+                    @{foreach(var item in TiposInmuble){
+                            @:<option value=@item.Id @(item.Id==ViewBag.filtroTipoInmueble ? "selected" : "")>@item.Descripcion</option>
+                        }
+                    }
+                </select>
+        </div>
+        <div class="form-group col-3">
+                <label  class="control-label text-light">Tipo de Usoe</label>
+                <select  class="form-select" name="filtroTipoUso">
+                    <option value=0>Eliga un tipo de Uso</option>
+                    @{foreach(var item in TiposUso){
+                            @:<option value=@item.Id @(item.Id==ViewBag.filtroTipoUso ? "selected" : "")>@item.Descripcion</option>
+                        }
+                    }
+                </select>
+        </div>
+        <div class="form-group col-2">
+            <label class="control-label text-light">Cantidad de Ambieste</label>
+            <input type="number" class="form-control" value=@ViewBag.filtroCA name="filtroCA"/>
+        </div>
+        <p class="d-flex justify-content-center align-items-center text-light col-2" style="margin: 0;">
+            Contrato Fictisio
+        </p>
+        <div class="form-group col-4">
+            <label class="control-label text-light">Fecha de Inicio</label>
+            <input type="date" value="@ViewBag.filtroFechaInicio" class="form-control" name="filtroFechaInicio"/>
+        </div>
+        <div class="form-group col-4">
+            <label class="control-label text-light">Fecha de Fin</label>
+            <input  type="date" value="@ViewBag.filtroFechaFin"  class="form-control" name="filtroFechaFin"/>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Filtrar" class="btn btn-primary"/>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th >
+            <th class="text-light">
+                Tipo de Uso
+            </th>
+            <th class="text-light">
+                Estado
+            </th>
+            <th class="text-light">
+                Propietario
+            </th>
+            <th class="text-light">
+                Tipo de Inmueble
+            </th>
+            <th class="text-light"></th>
+            <th class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.TipoUsoId.Descripcion)
+            </td class="text-light">
+            
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.TipoEstadoId.Descripcion)
+            </td>
+            <td class="text-light"> 
+                @Html.ActionLink(@item.PropietarioId.UsuarioId.Nombre+" "+@item.PropietarioId.UsuarioId.Apellido, "Details","Usuarios", new { id=item.PropietarioId.Id })
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.TipoInmuebleId.Descripcion)
+            </td>
+            <td class="text-light  d-flex flex-row justify-content-around align-items-center">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Inmueble">
+                    <a asp-action="Details" asp-route-id=@item.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Inmueble">
+                    <a asp-action="Edit" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Inmueble">
+                    <a asp-action="Delete" asp-route-id=@item.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button></a>
+                </span>
+                
+            </td>
+            <td>
+                @if(item.TipoEstadoId.Id != 102){
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Desabilitar Inmueble">
+                        <a asp-action="Deshabilitar" asp-route-id=@item.Id><button type="button" class="btn btn-dark" ><i class="fa-solid fa-house-circle-xmark"></i></button></a>
+                    </span> 
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

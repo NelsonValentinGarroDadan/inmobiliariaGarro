@@ -1,0 +1,56 @@
+@model inmobiliaria.Models.Administradores
+
+@{
+    ViewData["Title"] = "Crear Administrador";
+    IEnumerable<inmobiliaria.Models.Usuarios> lista = ViewBag.Usuarios;
+}
+<h1 class="text-center text-light">Cree un administrador</h1>
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button></a></h4>
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <p class="text-light">Previamente debe haberse creado un Usuario con los datos de la persona.Si no lo hizo vuelva a la  @Html.ActionLink("Pagina de Usuario", "Create", "Usuarios") y creelo. <br> 
+    Si ya tiene existe el usuario que desea busquelo en el select de abajo</p>
+    <hr />
+    <div class="col-md-4">
+        <form asp-action="Create" id="create" style="max-width: 500px;" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label text-light"></label>
+                <select asp-for="Id" class="form-select">
+                    <option class="option" value="0" >Eliga un Usuario</option>
+                    @{foreach(var item in lista){
+                        @:<option value=@item.Id  @(item.Id==ViewBag.Id ? "selected" : "" ) >@item.ToString()</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label text-light" >Clave</label>
+                <input type="password" class="form-control"  id="clave"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clave" class="control-label text-light" >Confirmar Clave</label>
+                <input type="password" asp-for="Clave" class="form-control"  id="claveConfirm"/>
+                <span asp-validation-for="Clave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvatarFileName" class="control-label text-light">Avatar</label>
+                <input asp-for="AvatarFileName" class="form-control" />
+                <span asp-validation-for="Clave" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" style="width: 100%;"/>
+            </div>
+        </form>
+        <p class="text-center text-light"style="margin-top: 1rem;">
+            o
+        </p>
+        <div style="margin-top: 1rem;">
+             <a asp-action="Create" asp-controller="Usuarios" style="width: 100%;"><button type="button" class="btn btn-secondary"  style="width: 100%;">Crear Usuario <i class="fa-solid fa-plus"></i></button></a>
+        </div>
+    </div>
+</div>
+
+

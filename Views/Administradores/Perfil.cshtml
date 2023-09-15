@@ -1,0 +1,67 @@
+@model inmobiliaria.Models.Administradores
+
+@{
+    ViewData["Title"] = "Perfil Administrador";
+}
+
+<h1 class="text-center text-light">Perfil de Administrador</h1> 
+
+<div class="container d-flex flex-column justify-content-between align-items-center">
+   
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2 text-light">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            @Html.DisplayNameFor(model => model.UsuarioId.DNI)
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.UsuarioId.DNI)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            @Html.DisplayNameFor(model => model.UsuarioId.Nombre)
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.UsuarioId.Nombre)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            @Html.DisplayNameFor(model => model.UsuarioId.Apellido)
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.UsuarioId.Apellido)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            @Html.DisplayNameFor(model => model.UsuarioId.Telefono)
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.UsuarioId.Telefono)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            @Html.DisplayNameFor(model => model.UsuarioId.Mail)
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.UsuarioId.Mail)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            @Html.DisplayNameFor(model => model.Avatar)
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @if(Model.Avatar == null)
+            {
+                <p class="text-light">Sin Avatar</p>
+            }else{
+              <img src=@Model.Avatar style="max-width: 8rem; max-height: 8rem;">  
+            }
+            
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id=@Model.Id asp-controller="Usuarios"><button type="button" class="btn btn-warning" >Editar Perfil<i class="fa-regular fa-pen-to-square"></i></i></button></a>
+    <a asp-action="CambiarClave" asp-route-id=@Model.Id><button type="button" class="btn btn-light" >Cambiar Clave <i class="fa-solid fa-lock"></i></button></a>
+    <a asp-action="CambiarAvatar" asp-route-id=@Model.Id><button type="button" class="btn btn-light" >Cambiar Avatar <i class="fa-solid fa-lock"></i></button></a>
+</div>

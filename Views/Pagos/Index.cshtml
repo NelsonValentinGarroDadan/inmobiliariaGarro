@@ -1,0 +1,93 @@
+@model IEnumerable<inmobiliaria.Models.Pagos>
+
+@{
+    ViewData["Title"] = "Pagos";
+    var Contratos = ViewBag.Contratos;
+}
+
+<h1 class="text-center text-light">Pagos</h1>
+<p>
+    <a asp-action="Create"><button type="button" class="btn btn-secondary">Crear Pago <i class="fa-solid fa-plus"></i></button></a>
+</p>
+<p class="text-light">Filtros: </p>
+<div class="container">
+    
+    <form asp-action="Index" class="row">
+        <div class="form-group col-4">
+                <label class="control-label text-light">Contratos</label>
+                <select class="form-select" name="filtroContrato">
+                    <option value=0>Eliga un Contrato</option>
+                    @{foreach(var item in Contratos){ 
+                        @:<option value=@item.Id @(item.Id==ViewBag.filtroContrato ? "selected" : "") >@item.ToString()</option>
+                       
+                    }
+                    }
+                </select>
+            </div>
+        <div class="form-group col-6">
+            <label class="control-label text-light">Desde la fecha en adelante</label>
+            <input type="datetime-local" value="@ViewBag.filtroFecha" class="form-control" name="filtroFecha"/>
+        </div>
+        <div class="form-group col-5">
+            <input  type="number" value="@ViewBag.filtroImporteMayor"  placeholder="Ingrese un valor de importe"  class="form-control" name="filtroImporteMayor"/>
+            
+        </div>
+        <div class="form-group col-2  d-flex flex-row justify-content-around align-items-center ">
+           <h4 class="text-light text-center"> < </h4>    <h4 class="text-light text-center">Importe</h4>     <h4 class="text-light text-center"> < </h4>
+        </div>
+        <div class="form-group col-5">
+            <input  type="number" value="@ViewBag.filtroImporteMenor"  class="form-control" placeholder="Ingrese un valor de importe" name="filtroImporteMenor"/>
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" value="Filtrar" class="btn btn-primary"/>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th class="text-light">
+                Contrato
+            </th>
+            
+            <th class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-light"> 
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td class="text-light">
+                @Html.ActionLink("Detalles del contrato", "Details","Contratos", new {id=item.ContratoId.Id })
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Importe)
+            </td>
+            <td class="text-light  d-flex flex-row justify-content-around align-items-center">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Pago">
+                    <a asp-action="Details" asp-route-id=@item.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Pago">
+                    <a asp-action="Edit" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Pago">
+                    <a asp-action="Delete" asp-route-id=@item.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button></a>
+                </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

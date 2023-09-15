@@ -1,0 +1,47 @@
+@model IEnumerable<inmobiliaria.Models.TiposEstados>
+
+@{
+    ViewData["Title"] = "Tipos Estados";
+}
+
+<h1 class="text-center text-light">Tipos Estados</h1>
+<p>
+    <a asp-action="Create"><button type="button" class="btn btn-secondary">Crear Tipo de Estado <i class="fa-solid fa-plus"></i></button></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td >
+            <td class="text-light  d-flex flex-row justify-content-around align-items-center">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Tipo de Estado">
+                    <a asp-action="Details" asp-route-id=@item.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Tipo de Estado">
+                    <a asp-action="Edit" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Tipo de Estado">
+                    <a asp-action="Delete" asp-route-id=@item.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button></a>
+                </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,24 @@
+@model inmobiliaria.Models.TiposInmuebles
+
+@{
+    ViewData["Title"] = "Crear Tipos de Estado";
+}
+<h1 class="text-center text-light">Cree un Tipo de Inmueble</h1>
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button></a></h4>
+<hr />
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <div class="col-md-4">
+        <form asp-action="Create" id="create" style="max-width: 500px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label text-light"></label>
+                <input asp-for="Descripcion" class="form-control" required/>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" style="width: 100%;"/>
+            </div>
+        </form>
+    </div>
+</div>
+

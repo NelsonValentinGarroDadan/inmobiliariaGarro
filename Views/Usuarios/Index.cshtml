@@ -1,0 +1,58 @@
+@model IEnumerable<inmobiliaria.Models.Usuarios>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+<h1 class="text-center text-light">Usuarios</h1>
+<p>
+    <a asp-action="Create"><button type="button" class="btn btn-secondary">Crear Usuario <i class="fa-solid fa-plus"></i></button></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.DNI)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-light"> 
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.DNI)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td class="text-light  d-flex flex-row justify-content-around align-items-center">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Usuario">
+                    <a asp-action="Details" asp-controller="Usuarios" asp-route-id=@item.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Usuario">
+                    <a asp-action="Edit" asp-controller="Usuarios" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Usuario">
+                    <a asp-action="Delete" asp-controller="Usuarios" asp-route-id=@item.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-user-slash"></i></button></a>
+                </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

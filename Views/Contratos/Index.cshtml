@@ -1,0 +1,122 @@
+@model IEnumerable<inmobiliaria.Models.Contratos>
+
+@{
+    ViewData["Title"] = "Contratos";
+    var TiposEstado = ViewBag.TiposEstados;
+    var Inmuebles = ViewBag.Inmuebles;
+}
+
+<h1 class="text-center text-light">Contratos</h1>
+<p>
+    <a asp-action="Create"><button type="button" class="btn btn-secondary">Crear Contrato <i class="fa-solid fa-plus"></i></button></a>
+</p>
+<p class="text-light">Filtros: </p>
+<div class="container">
+    
+    <form asp-action="Index" class="row">
+        <div class="form-group col-4">
+                <label class="control-label text-light">Estado</label>
+                <select class="form-select" name="filtroEstado">
+                    <option value=0>Eliga un Estado</option>
+                    @{foreach(var item in TiposEstado){
+                         @if(item.Descripcion == "Vigente" || item.Descripcion == "Vencido" || item.Descripcion == "Abonado" )
+                        {
+                            @:<option value=@item.Id @(item.Id==ViewBag.filtroEstado ? "selected" : "") >@item.Descripcion</option>
+                        }
+                    }
+                    }
+                </select>
+            </div>
+        <div class="form-group col-4">
+                <label  class="control-label text-light">Inquilino</label>
+                <select  class="form-select" name="filtroInquilino">
+                    <option value=0>Eliga un Inquilino</option>
+                    @{foreach(var item in Model){
+                            @:<option value=@item.InquilinoId.Id @(item.InquilinoId.Id==ViewBag.filtroInquilino ? "selected" : "")>@item.InquilinoId.toString()</option>
+                        }
+                    }
+                </select>
+        </div>
+        <div class="form-group col-4">
+                <label  class="control-label text-light">Inmueble</label>
+                <select  class="form-select" name="filtroInmueble">
+                    <option value=0>Eliga un Inmueble</option>
+                    @{foreach(var item in Inmuebles){
+                            @:<option value=@item.Id @(item.Id==ViewBag.filtroInmueble ? "selected" : "")>@item.toString()</option>
+                        }
+                    }
+                </select>
+        </div>
+        <div class="form-group col-6">
+            <label class="control-label text-light">Fecha de Inicio</label>
+            <input type="datetime-local" value="@ViewBag.filtroFechaInicio" class="form-control" name="filtroFechaInicio"/>
+        </div>
+        <div class="form-group col-6">
+            <label class="control-label text-light">Fecha de Fin</label>
+            <input  type="datetime-local" value="@ViewBag.filtroFechaFin"  class="form-control" name="filtroFechaInicio"/>
+        </div>
+        <div class="form-group col-5">
+            <input  type="number" value="@ViewBag.filtroImporteMayor"  placeholder="Ingrese un valor de importe"  class="form-control" name="filtroImporteMayor"/>
+            
+        </div>
+        <div class="form-group col-2  d-flex flex-row justify-content-around align-items-center ">
+           <h4 class="text-light text-center"> < </h4>    <h4 class="text-light text-center">Importe</h4>     <h4 class="text-light text-center"> < </h4>
+        </div>
+        <div class="form-group col-5">
+            <input  type="number" value="@ViewBag.filtroImporteMenor"  class="form-control" placeholder="Ingrese un valor de importe" name="filtroImporteMenor"/>
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" value="Filtrar" class="btn btn-primary"/>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-light">
+                Inquilino
+            </th>
+            <th class="text-light">
+                Inmueble
+            </th>
+            <th class="text-light">
+                Estado
+            </th>
+            <td class="text-light"></td>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-light">
+                @Html.ActionLink(@item.InquilinoId.UsuarioId.Nombre+" "+@item.InquilinoId.UsuarioId.Apellido, "Details","Usuarios", new { id=item.InquilinoId.Id })
+            </td>
+            <td class="text-light">
+                @Html.ActionLink("Detalles del Inmueble", "Details","Inmuebles", new { id=item.InmuebleId.Id })
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.TipoEstadoId.Descripcion)
+            </td>
+            <td class="text-light  d-flex flex-row justify-content-around align-items-center">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Contrato">
+                    <a asp-action="Details" asp-route-id=@item.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Contrato">
+                    <a asp-action="Edit" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Contrato">
+                    <a asp-action="Delete" asp-route-id=@item.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button></a>
+                </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

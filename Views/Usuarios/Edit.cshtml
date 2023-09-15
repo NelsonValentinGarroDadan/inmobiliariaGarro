@@ -1,0 +1,49 @@
+@model inmobiliaria.Models.Usuarios
+
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+<h1 class="text-center text-light">Editar Usuario</h1> 
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button></a></h4>
+
+<hr />
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <div class="col-md-4">
+        <form asp-action="Edit" id="update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label text-light"></label>
+                <p class="text-light">@Html.DisplayFor(model => model.Id)</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="DNI" class="control-label text-light"></label>
+                <input asp-for="DNI" class="form-control " placeholder="@Html.DisplayFor(model => model.DNI)" required/>
+                <span asp-validation-for="DNI" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label text-light"></label>
+                <input asp-for="Nombre" class="form-control" placeholder="@Html.DisplayFor(model => model.Nombre)" required/>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellido" class="control-label text-light"></label>
+                <input asp-for="Apellido" class="form-control" placeholder="@Html.DisplayFor(model => model.Apellido)" required/>
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label text-light"></label>
+                <input asp-for="Telefono" class="form-control" placeholder="@Html.DisplayFor(model => model.Telefono)"required/>
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mail" class="control-label text-light"></label>
+                <input asp-for="Mail" class="form-control" placeholder="@Html.DisplayFor(model => model.Mail)" required/>
+                <span asp-validation-for="Mail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" style="width:100%;"/>
+            </div>
+        </form>
+    </div>
+</div>
+

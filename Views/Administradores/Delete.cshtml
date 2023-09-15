@@ -1,0 +1,44 @@
+@model inmobiliaria.Models.Administradores
+
+@{
+    ViewData["Title"] = "Eleminar Administrador";
+}
+
+<h1 class="text-center text-light">Eliminar Administrador</h1> 
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button></a></h4>
+
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <p class="text-light"><b>Advertecia:</b> Enviando este formulario se eliminara al administrador, pero no los datos de su usuario. Para eliminar tambien los datos de su Usuario debe ir al apartado de  @Html.ActionLink("Usuarios", "Index", "Usuarios")</p>
+    <hr />
+    <dl class="row">
+                    <dt class = "col-sm-3 text-light">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </dt>
+                    <dd class = "col-sm-9 text-light" asp-for="Id UsuarioId">
+                        @Html.DisplayFor(model => model.Id)
+                    </dd>
+                    <dt class = "col-sm-3 text-light">
+                        @Html.DisplayNameFor(model => model.UsuarioId.DNI)
+                    </dt>
+                    <dd class = "col-sm-9 text-light">
+                        @Html.DisplayFor(model => model.UsuarioId.DNI)
+                    </dd>
+                    <dt class = "col-sm-3 text-light">
+                        @Html.DisplayNameFor(model => model.UsuarioId.Nombre)
+                    </dt>
+                    <dd class = "col-sm-9 text-light">
+                        @Html.DisplayFor(model => model.UsuarioId.Nombre)
+                    </dd>
+                    <dt class = "col-sm-3 text-light">
+                        @Html.DisplayNameFor(model => model.UsuarioId.Apellido)
+                    </dt>
+                    <dd class = "col-sm-9 text-light">
+                        @Html.DisplayFor(model => model.UsuarioId.Apellido)
+                    </dd>
+    </dl>
+   
+</div>
+
+<form asp-action="Delete" id="delete">
+    <input type="submit" value="Eliminar" class="btn btn-danger" />
+</form>

@@ -1,0 +1,56 @@
+@model inmobiliaria.Models.Contratos
+
+@{
+    ViewData["Title"] = "Crear Contrato";
+    var Usuarios = ViewBag.Usuarios;
+    var Inmuebles = ViewBag.Inmuebles;
+}
+
+<h1 class="text-center text-light">Cree un Contrato</h1>
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button></a></h4>
+<hr />
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <div class="col-md-4">
+        <form asp-action="Create" id="create" style="max-width: 500px;">
+            <div class="form-group">
+                <label asp-for="FechaInicio" class="control-label text-light">Fecha de Inicio</label>
+                <input asp-for="FechaInicio" value=@ViewBag.FechaInicio class="form-control" required/>
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaFin" class="control-label text-light">Fecha de Fin</label>
+                <input asp-for="FechaFin" value=ViewBag.FechaFin class="form-control" required/>
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  class="control-label text-light">Inquilino</label>
+                <select asp-for="InquilinoId.Id" class="form-select">
+                    <option value=0>Eliga un inquilino</option>
+                    @{foreach(var item in Usuarios){
+                            @:<option value=@item.Id @(item.Id==ViewBag.Inquilino ? "selected" : "" )>@item.ToString() </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label text-light">Inmueble</label>
+                <select asp-for="InmuebleId.Id" class="form-select">
+                    <option value=0>Eliga un Inmueble</option>
+                    @{foreach(var item in Inmuebles){
+                            @:<option value=@item.Id @(item.Id==ViewBag.Inmueble ? "selected" : "" )>Id:@item.Id | Dueño: @item.PropietarioId.UsuarioId.ToString()</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Importe" class="control-label text-light"></label>
+                <input asp-for="Importe" class="form-control" value="" required/>
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" style="width: 100%;"/>
+            </div>
+        </form>
+    </div>
+</div>
+

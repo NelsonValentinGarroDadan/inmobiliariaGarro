@@ -1,0 +1,74 @@
+@model IEnumerable<inmobiliaria.Models.Administradores>
+
+@{
+    ViewData["Title"] = "Administradores";
+}
+
+<h1 class="text-center text-light">Administradores</h1>
+<p>
+    <a asp-action="Create"><button type="button" class="btn btn-secondary">Crear Aministrador <i class="fa-solid fa-plus"></i></button></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light ">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.UsuarioId.DNI)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.UsuarioId.Nombre)
+            </th>
+            <th class="text-light">
+                @Html.DisplayNameFor(model => model.UsuarioId.Apellido)
+            </th >
+            <th class="text-light">
+                Avatar
+            </th>
+            <th class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr >
+            <td class="text-light ">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.UsuarioId.DNI)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.UsuarioId.Nombre)
+            </td>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.UsuarioId.Apellido)
+            </td>
+            <td class="text-light ">
+               @if(item.Avatar == null)
+                {
+                    <p>Sin Foto</p>
+                }else{
+                   <img src=@item.Avatar style="max-width: 4rem; max-height: 4rem;"> 
+                }
+            </td>
+            <td class="text-light d-flex flex-row justify-content-around align-items-center" style="height: 5rem;">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Administrador">
+                    <a asp-action="Details" asp-controller="Usuarios" asp-route-id=@item.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Administrador">
+                    <a asp-action="Edit" asp-controller="Usuarios" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Administrador">
+                    <a asp-action="Delete" asp-route-id=@item.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-user-slash"></i></button></a>
+                </span>
+
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Cambiar Contraseña">
+                    <a asp-action="CambiarClave" asp-route-id=@item.Id><button type="button" class="btn btn-light" ><i class="fa-solid fa-lock"></i></button></a>
+                </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
