@@ -30,7 +30,12 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult Index()
         {
-           
+           if (User.IsInRole("Empleado"))
+			{
+				TempData["Mensaje"] = "No tienes permiso de ver este contenido";
+                return RedirectToAction(nameof(Index), "Home"); 
+                
+			}
             ViewBag.Id = TempData["Id"];
             if(TempData.ContainsKey("Mensaje"))
             {
@@ -45,6 +50,12 @@ namespace inmobiliaria.Controllers
         // GET: Usuarios/Details/5
         public ActionResult Details(int id)
         {
+            if (User.IsInRole("Empleado"))
+			{
+				TempData["Mensaje"] = "No tienes permiso de ver este contenido";
+                return RedirectToAction(nameof(Index), "Home"); 
+                
+			}
             var UR = new UsuariosRepositorio();
             var U = UR.ObtenerXId(id);
             return View(U);
@@ -53,6 +64,12 @@ namespace inmobiliaria.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
+            if (User.IsInRole("Empleado"))
+			{
+				TempData["Mensaje"] = "No tienes permiso de ver este contenido";
+                return RedirectToAction(nameof(Index), "Home"); 
+                
+			}
             ViewBag.Id = TempData["Id"];
             
             if(TempData.ContainsKey("Mensaje"))
@@ -69,6 +86,12 @@ namespace inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Usuarios u)
         {
+            if (User.IsInRole("Empleado"))
+			{
+				TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                return RedirectToAction(nameof(Index), "Home"); 
+                
+			}
             //Validaciones de Entrada 
             if (u.DNI < 0)
             {
@@ -145,12 +168,9 @@ namespace inmobiliaria.Controllers
             var ER = new EmpleadosRepositorio();
             if (User.IsInRole("Empleado"))
 			{
-				if (User.Identity.Name != id+"")
-                {
-                    TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                    return RedirectToAction(nameof(Index), "Home"); 
-                }
-					
+				TempData["Mensaje"] = "No tienes permiso de ver este contenido";
+                return RedirectToAction(nameof(Index), "Home"); 
+                
 			}
             ViewBag.Id = TempData["Id"];
             if(TempData.ContainsKey("Mensaje"))
@@ -166,6 +186,12 @@ namespace inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Usuarios u)
         {
+            if (User.IsInRole("Empleado"))
+			{
+				TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                return RedirectToAction(nameof(Index), "Home"); 
+                
+			}
              //Validaciones de Entrada 
             if (u.DNI < 0)
             {
@@ -246,6 +272,11 @@ namespace inmobiliaria.Controllers
         // GET: Usuarios/Delete/5
         public ActionResult Delete(int id)
         {
+            if (User.IsInRole("Empleado"))
+                {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+            }
             ViewBag.Id = TempData["Id"];
             
             if(TempData.ContainsKey("Mensaje"))
@@ -253,11 +284,7 @@ namespace inmobiliaria.Controllers
                 ViewBag.Mensaje = TempData["Mensaje"];
 
             }
-            if (User.IsInRole("Empleado"))
-                {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                        return RedirectToAction(nameof(Index), "Home"); 
-            }
+            
             var UR = new UsuariosRepositorio();
                 
             return View(UR.ObtenerXId(id));
@@ -269,14 +296,15 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult Delete(int id, Usuarios u)
         {
+            if (User.IsInRole("Empleado"))
+            {
+                TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                return RedirectToAction(nameof(Index), "Home"); 
+            }
             try
             {
                 var UR = new UsuariosRepositorio();
-                if (User.IsInRole("Empleado"))
-                {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                        return RedirectToAction(nameof(Index), "Home"); 
-                }
+                
                 var bol = UR.Baja(UR.ObtenerXId(id));
                 if(bol)
                 {
@@ -366,8 +394,7 @@ namespace inmobiliaria.Controllers
                     new ClaimsPrincipal(claimIdentity)
                 );
                 TempData["Mensaje"] = "Bienvenido "+u.UsuarioId.Nombre+" "+u.UsuarioId.Apellido;
-                return RedirectToAction(nameof(Index));   
-                    
+                return RedirectToAction("Index","Home");
             }
             catch(Exception e)
             {

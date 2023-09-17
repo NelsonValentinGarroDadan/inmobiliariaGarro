@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
             try{
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection()))
                 {
-                    string sql = @"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleId,FechaInicio,FechaFin FROM Inmuebles;";
+                    string sql = @"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleIdFROM Inmuebles;";
                     using (MySqlCommand command= new MySqlCommand(sql,connection))
                     {
                         command.CommandType = CommandType.Text;
@@ -34,9 +34,6 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                                 TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
                                 PropietarioId = PR.ObtenerXId(reader.GetInt32("PropietarioId")),
                                 TipoInmuebleId = TIR.ObtenerXId(reader.GetInt32("TipoInmuebleId")),
-                                FechaInicio = reader.GetDateTime("FechaInicio"),
-                                FechaFin = reader.GetDateTime("FechaFin"),
-
                             };
                             res.Add(r);
                         }
@@ -60,7 +57,7 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
             try{
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection()))
             {
-                string sql = @$"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleId,FechaInicio,FechaFin FROM Inmuebles WHERE Id = @Id;";
+                string sql = @$"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleId FROM Inmuebles WHERE Id = @Id;";
                 using (MySqlCommand command= new MySqlCommand(sql,connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -81,8 +78,6 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                             TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
                             PropietarioId = PR.ObtenerXId(reader.GetInt32("PropietarioId")),
                             TipoInmuebleId = TIR.ObtenerXId(reader.GetInt32("TipoInmuebleId")),
-                            FechaInicio = reader.GetDateTime("FechaInicio"),
-                            FechaFin = reader.GetDateTime("FechaFin"),
 
                         };
                     }
@@ -107,8 +102,8 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                     throw new Exception("Ya existe este inmueble");
                 }
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection())){
-                string sql = "INSERT INTO Inmuebles (Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleId,FechaInicio,FechaFin)"+
-                            $"Values (@Id,@Direccion,@TipoUsoId,@CA,@Longitud,@Latitud,@Precio,@TipoEstadoId,@PropietarioId,@TipoInmuebleId,@FechaInicio,@FechaFin);"+
+                string sql = "INSERT INTO Inmuebles (Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleId)"+
+                            $"Values (@Id,@Direccion,@TipoUsoId,@CA,@Longitud,@Latitud,@Precio,@TipoEstadoId,@PropietarioId,@TipoInmuebleId);"+
                             $"SELECT LAST_INSERT_ID();";
                 using (MySqlCommand command = new MySqlCommand(sql,connection)){
                     command.CommandType = CommandType.Text;
@@ -122,8 +117,6 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                     command.Parameters.AddWithValue("@TipoEstadoId",101);
                     command.Parameters.AddWithValue("@PropietarioId",i.PropietarioId.Id);
                     command.Parameters.AddWithValue("@TipoInmuebleId",i.TipoInmuebleId.Id);
-                    command.Parameters.AddWithValue("@FechaInicio",i.FechaInicio);
-                    command.Parameters.AddWithValue("@FechaFin",i.FechaFin);
                     connection.Open();
                     i.Id = Convert.ToInt32(command.ExecuteScalar());
                     res=i.Id;
@@ -173,7 +166,7 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                             string sql = $"UPDATE Inmuebles SET " +
                                         $"Direccion=@Direccion,TipoUsoId=@TipoUsoId,CA=@CA,Longitud=@Longitud,"+
                                         "Latitud=@Latitud,Precio=@Precio,TipoEstadoId=@TipoEstadoId,PropietarioId=@PropietarioId,"+
-                                        "TipoInmuebleId=@TipoInmuebleId,FechaInicio=@FechaInicio,FechaFin=@FechaFin"+
+                                        "TipoInmuebleId=@TipoInmuebleId"+
                                         $" WHERE Id=@Id;";
                             using (MySqlCommand command = new MySqlCommand (sql,connection))
                             {
@@ -188,8 +181,6 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                                 command.Parameters.AddWithValue("@TipoEstadoId",i.TipoEstadoId.Id);
                                 command.Parameters.AddWithValue("@PropietarioId",i.PropietarioId.Id);
                                 command.Parameters.AddWithValue("@TipoInmuebleId",i.TipoInmuebleId.Id);
-                                command.Parameters.AddWithValue("@FechaInicio",i.FechaInicio);
-                                command.Parameters.AddWithValue("@FechaFin",i.FechaFin);
                                 connection.Open();
                                 res = command.ExecuteNonQuery() != 0;
                                 connection.Close();
@@ -203,8 +194,6 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
 
         public bool Deshabilitar(Inmuebles i){
             i.TipoEstadoId.Id= 102;
-            i.FechaFin = DateTime.MinValue;
-            i.FechaInicio = DateTime.MinValue;
             return Modificacion(0,i);
         }
         private bool Existe(Inmuebles i){

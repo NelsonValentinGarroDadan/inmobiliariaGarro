@@ -25,7 +25,7 @@ namespace inmobiliaria.Controllers
         {
               if (User.IsInRole("Empleado"))
                 {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        TempData["Mensaje"] = "No tienes permiso de ver este contenido";
                         return RedirectToAction(nameof(Index), "Home"); 
             }
             ViewBag.Id = TempData["Id"];
@@ -43,18 +43,13 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult Details(int id)
         {
-           
-            var UR = new UsuariosRepositorio();
-            if (User.IsInRole("Empleado"))
+           if (User.IsInRole("Empleado"))
 			{
-				var user = UR.ObtenerXMail(User.Identity.Name);
-				if (user.Id != id)
-                {
-                    TempData["Mensaje"] = "No tienes permiso de ver";
-                    return RedirectToAction(nameof(Index), "Home"); 
-                }
-					
+				TempData["Mensaje"] = "No tienes permiso de ver este contenido";
+                return RedirectToAction(nameof(Index), "Home"); 
+                
 			}
+            var UR = new UsuariosRepositorio();
             var PR = new EmpleadosRepositorio();
             var E = PR.ObtenerXId(id);
             return View("../Usuarios/Details",E.UsuarioId);
@@ -106,6 +101,11 @@ namespace inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Empleados e)
         {
+            if (User.IsInRole("Empleado"))
+                {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+            }
             //ViewBag
             ViewBag.Id = e.Id;
             //Validaciones de Entrada 
@@ -126,11 +126,7 @@ namespace inmobiliaria.Controllers
             }
             try
             {
-                 if (User.IsInRole("Empleado"))
-                {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                        return RedirectToAction(nameof(Index), "Home"); 
-            }
+                 
                 var ER = new EmpleadosRepositorio();
                 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                         password: e.Clave,
@@ -182,6 +178,15 @@ namespace inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CambiarClave(int id, Empleados e)
         {
+            if (User.IsInRole("Empleado"))
+                {
+                    if (User.Identity.Name != id+"")
+                    {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+                    }
+                        
+                }
              //Validaciones de Entrada 
             if(String.IsNullOrEmpty(e.Clave)){
                 TempData["Mensaje"]="El campo Clave es obligatorio";
@@ -195,15 +200,7 @@ namespace inmobiliaria.Controllers
             try
             {  
                 var ER = new EmpleadosRepositorio();
-                if (User.IsInRole("Empleado"))
-                {
-                    if (User.Identity.Name != id+"")
-                    {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                        return RedirectToAction(nameof(Index), "Home"); 
-                    }
-                        
-                }
+                
                 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                         password: e.Clave,
                         salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
@@ -258,10 +255,7 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult CambiarAvatar(int id, Empleados a)
         {
-            try
-            {
-                var ER = new EmpleadosRepositorio();
-                if (User.IsInRole("Empleado"))
+            if (User.IsInRole("Empleado"))
                 {
                     if (User.Identity.Name != id+"")
                     {
@@ -270,6 +264,10 @@ namespace inmobiliaria.Controllers
                     }
                         
                 }
+            try
+            {
+                var ER = new EmpleadosRepositorio();
+                
                 var bol =ER.CambiarAvatar(a);
                 if(bol)
                 {
@@ -314,13 +312,14 @@ namespace inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Empleados e)
         {
+            if (User.IsInRole("Empleado"))
+            {
+                TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                return RedirectToAction(nameof(Index), "Home"); 
+            }
             try
             {
-                 if (User.IsInRole("Empleado"))
-                {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                        return RedirectToAction(nameof(Index), "Home"); 
-            }
+                 
                 var ER = new EmpleadosRepositorio();
                 var bol = ER.Baja(e);
                 if(bol)

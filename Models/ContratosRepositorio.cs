@@ -6,14 +6,13 @@ public class ContratosRepositorio
 {
         public List<Contratos> ObtenerTodos()
         {
-            var TER = new TiposEstadosRepositorio();
             var INR = new InquilinosRepositorio();
             var IR = new InmueblesRepositorio();
             var res = new List<Contratos>();
             try{
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection()))
                 {
-                    string sql = @"SELECT Id,FechaInicio,FechaFin,InquilinoId,InmuebleId,TipoEstadoId,Importe FROM Contratos;";
+                    string sql = @"SELECT Id,FechaInicio,FechaFin,InquilinoId,InmuebleId,Importe FROM Contratos;";
                     using (MySqlCommand command= new MySqlCommand(sql,connection))
                     {
                         command.CommandType = CommandType.Text;
@@ -28,7 +27,6 @@ public class ContratosRepositorio
                                 FechaInicio = reader.GetDateTime("FechaInicio"),
                                 FechaFin = reader.GetDateTime("FechaFin"),
                                 InquilinoId = INR.ObtenerXId(reader.GetInt32("InquilinoId")) ,
-                                TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
                                 InmuebleId =IR.ObtenerXId(reader.GetInt32("InmuebleId")),
                                 Importe = reader.GetDecimal("Importe"),
 
@@ -55,7 +53,7 @@ public class ContratosRepositorio
             try{
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection()))
             {
-                string sql = @$"SELECT Id,FechaInicio,FechaFin,InquilinoId,InmuebleId,TipoEstadoId,Importe FROM Contratos WHERE Id = @Id;";
+                string sql = @$"SELECT Id,FechaInicio,FechaFin,InquilinoId,InmuebleId,Importe FROM Contratos WHERE Id = @Id;";
                 using (MySqlCommand command= new MySqlCommand(sql,connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -70,7 +68,6 @@ public class ContratosRepositorio
                             FechaInicio = reader.GetDateTime("FechaInicio"),
                             FechaFin = reader.GetDateTime("FechaFin"),
                             InquilinoId = INR.ObtenerXId(reader.GetInt32("InquilinoId")) ,
-                            TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
                             InmuebleId = IR.ObtenerXId(reader.GetInt32("InmuebleId")),
                             Importe = reader.GetDecimal("Importe"),
 
@@ -100,15 +97,14 @@ public class ContratosRepositorio
                     throw new Exception("El inmueble esta ocupado");
                 }
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection())){
-                string sql = "INSERT INTO Contratos (FechaInicio,FechaFin,InquilinoId,InmuebleId,TipoEstadoId,Importe)"+
-                            $" Values (@FechaInicio,@FechaFin,@InquilinoId,@InmuebleId,@TipoEstadoId,@Importe);"+
+                string sql = "INSERT INTO Contratos (FechaInicio,FechaFin,InquilinoId,InmuebleId,Importe)"+
+                            $" Values (@FechaInicio,@FechaFin,@InquilinoId,@InmuebleId,@Importe);"+
                             $"SELECT LAST_INSERT_ID();";
                 using (MySqlCommand command = new MySqlCommand(sql,connection)){
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@FechaInicio",c.FechaInicio);
                     command.Parameters.AddWithValue("@FechaFin",c.FechaFin);
                     command.Parameters.AddWithValue("@InquilinoId",c.InquilinoId.Id);
-                    command.Parameters.AddWithValue("@TipoEstadoId",104);
                     command.Parameters.AddWithValue("@InmuebleId",c.InmuebleId.Id);
                     command.Parameters.AddWithValue("@Importe",c.Importe);
                     connection.Open();
@@ -159,7 +155,7 @@ public class ContratosRepositorio
                 using (MySqlConnection connection = new MySqlConnection (Connection.stringConnection()))
                         {
                             string sql = $"UPDATE Contratos SET " +
-                                        $"FechaInicio=@FechaInicio,FechaFin=@FechaFin,InquilinoId=@InquilinoId,InmuebleId=@InmuebleId,TipoEstadoId=@TipoEstadoId"+
+                                        $"FechaInicio=@FechaInicio,FechaFin=@FechaFin,InquilinoId=@InquilinoId,InmuebleId=@InmuebleId"+
                                         $" WHERE Id=@Id;";
                             using (MySqlCommand command = new MySqlCommand (sql,connection))
                             {
@@ -169,7 +165,6 @@ public class ContratosRepositorio
                                 command.Parameters.AddWithValue("@FechaFin",c.FechaFin);
                                 command.Parameters.AddWithValue("@InquilinoId",c.InquilinoId.Id);
                                 command.Parameters.AddWithValue("@InmuebleId",c.InmuebleId.Id);
-                                command.Parameters.AddWithValue("@TipoEstadoId",c.TipoEstadoId.Id);
                                 connection.Open();
                                 res = command.ExecuteNonQuery() != 0;
                                 connection.Close();

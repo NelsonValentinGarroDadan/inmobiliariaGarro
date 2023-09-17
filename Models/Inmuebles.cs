@@ -20,10 +20,6 @@ public class Inmuebles
     [Required]
     public decimal Precio { get; set;}
     [Required]
-    public DateTime FechaInicio { get; set;}
-    [Required]
-    public DateTime FechaFin{ get; set;}
-    [Required]
     public TiposEstados TipoEstadoId { get; set;}
     [Required]
     public Propietarios PropietarioId { get; set;}

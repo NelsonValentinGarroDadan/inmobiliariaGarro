@@ -13,7 +13,6 @@ public class Contratos
     public Inquilinos InquilinoId { get; set;}
     [Required]
     public Inmuebles InmuebleId{ get; set;}
-    public TiposEstados TipoEstadoId { get; set;}
 
     public decimal Importe { get; set;}
     
