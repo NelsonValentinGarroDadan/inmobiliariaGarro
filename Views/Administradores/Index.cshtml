@@ -12,16 +12,16 @@
     <thead>
         <tr>
             <th class="text-light ">
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th class="text-light">
-                @Html.DisplayNameFor(model => model.UsuarioId.DNI)
+                DNI
             </th>
             <th class="text-light">
-                @Html.DisplayNameFor(model => model.UsuarioId.Nombre)
+                Nombre
             </th>
             <th class="text-light">
-                @Html.DisplayNameFor(model => model.UsuarioId.Apellido)
+                Apellido
             </th >
             <th class="text-light">
                 Avatar
@@ -66,6 +66,9 @@
 
                 <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Cambiar Contraseña">
                     <a asp-action="CambiarClave" asp-route-id=@item.Id><button type="button" class="btn btn-light" ><i class="fa-solid fa-lock"></i></button></a>
+                </span>
+                 <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Cambiar Avatar">
+                    <a asp-action="CambiarAvatar" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-brands fa-github-alt"></i></button></a>
                 </span>
             </td>
         </tr>

@@ -12,16 +12,45 @@
     <hr />
     <div class="col-md-4">
         <form asp-action="Create" id="create" style="max-width: 500px;" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label text-light"></label>
+                <h5 class="text-center text-light">Eliga un usuario</h5>
                 <select asp-for="Id" class="form-select">
-                    <option class="option" value="0" >Eliga un Usuario</option>
                     @{foreach(var item in lista){
-                        @:<option value=@item.Id  @(item.Id==ViewBag.Id ? "selected" : "" ) >@item.ToString()</option>
+                        @:<option value=@item.Id @(item.Id==ViewBag.Id ? "selected" : "" )>@item.toString()</option>
                         }
                     }
                 </select>
+                <p class="text-center text-light"style="margin-top: 1rem;">
+                    o
+                </p>
+                <h5 class="text-center text-light">Cree un usuario</h5>
+                <div>
+                    <div class="form-group " >
+                        <label asp-for="UsuarioId.DNI" class="control-label text-light">DNI</label>
+                        <input asp-for="UsuarioId.DNI" class="form-control" value="" />
+                        <span asp-validation-for="UsuarioId.DNI" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsuarioId.Nombre" class="control-label text-light">Nombre</label>
+                        <input asp-for="UsuarioId.Nombre" class="form-control" />
+                        <span asp-validation-for="UsuarioId.Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsuarioId.Apellido" class="control-label text-light">Apellido</label>
+                        <input asp-for="UsuarioId.Apellido" class="form-control" />
+                        <span asp-validation-for="UsuarioId.Apellido" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsuarioId.Telefono" class="control-label text-light">Telefono</label>
+                        <input asp-for="UsuarioId.Telefono" class="form-control" value="" />
+                        <span asp-validation-for="UsuarioId.Telefono" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsuarioId.Mail" class="control-label text-light">Mail</label>
+                        <input asp-for="UsuarioId.Mail" class="form-control" />
+                        <span asp-validation-for="UsuarioId.Mail" class="text-danger"></span>
+                    </div>
+                </div>
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             

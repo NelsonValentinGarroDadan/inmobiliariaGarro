@@ -89,13 +89,70 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult Create(Administradores a)
         {
-            //ViewBag
-            ViewBag.Id = a.Id;
-            //Validaciones de Entrada 
-            if (a.Id < 0)
+            if (User.IsInRole("Empleado"))
+                {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+            }
+             //Validaciones de Entrada 
+            if(a.Id > 0 && (a.UsuarioId.DNI > 0 || !String.IsNullOrEmpty(a.UsuarioId.Nombre) || !String.IsNullOrEmpty(a.UsuarioId.Apellido) || a.UsuarioId.Telefono != 0 || !String.IsNullOrEmpty(a.UsuarioId.Mail)))
             {
-                TempData["Mensaje"]="Debes Elegir un Usuario";
-                ModelState.AddModelError("Id", "Debes Elegir un Usuario");
+               TempData["Mensaje"]="Debes Elegir un Usuario o crear uno, no puede hacer ambos";
+                return RedirectToAction(nameof(Create)); 
+            }
+            if(a.Id < 0 && a.UsuarioId.DNI < 0 && String.IsNullOrEmpty(a.UsuarioId.Nombre) && String.IsNullOrEmpty(a.UsuarioId.Apellido) && a.UsuarioId.Telefono < 0 && String.IsNullOrEmpty(a.UsuarioId.Mail))
+            {
+                TempData["Mensaje"]="Debes Elegir un Usuario o crear uno";
+                return RedirectToAction(nameof(Create)); 
+            }
+            if (a.Id < 0 && a.UsuarioId.DNI < 0)
+            {
+                TempData["Mensaje"]="El campo de DNI es obligatorio";
+                ModelState.AddModelError("UsuarioId.DNI", "El campo DNI es obligatorio.");
+                return RedirectToAction(nameof(Create));
+            }else if(a.Id < 0 && !Expresiones.ValidarDNI(a.UsuarioId.DNI.ToString())){
+                TempData["Mensaje"]="El DNI no es valido, se permiten solo 7 o 8 caracteres";
+                ModelState.AddModelError("UsuarioId.DNI", "El DNI no es valido, se permiten solo 7 o 8 caracteres.");
+                return RedirectToAction(nameof(Create));
+            }
+            if (a.Id < 0 && string.IsNullOrEmpty(a.UsuarioId.Nombre))
+            {
+                TempData["Mensaje"]="El campo de Nombre es obligatorio";
+                ModelState.AddModelError("UsuarioId.Nombre", "El campo Nombre es obligatorio.");
+                return RedirectToAction(nameof(Create));
+            }else if(a.Id < 0 && !Expresiones.ValidarNombre(a.UsuarioId.Nombre)){
+                TempData["Mensaje"]="El Nombre es valido";
+                ModelState.AddModelError("UsuarioId.Nombre", "El Nombre es valido");
+                return RedirectToAction(nameof(Create));
+            }
+            if (a.Id < 0 && string.IsNullOrEmpty(a.UsuarioId.Apellido))
+            {
+                TempData["Mensaje"]="El campo de Apellido es obligatorio";
+                ModelState.AddModelError("UsuarioId.Apellido", "El campo Apellido es obligatorio.");
+                return RedirectToAction(nameof(Create));
+            } else if(a.Id < 0 && !Expresiones.ValidarApellido(a.UsuarioId.Apellido)){
+                TempData["Mensaje"]="El Apellido no es valido";
+                ModelState.AddModelError("UsuarioId.Apellido", "El Apellido no es valido.");
+                return RedirectToAction(nameof(Create));
+            }
+            if (a.Id < 0 && a.UsuarioId.Telefono < 0)
+            {
+                TempData["Mensaje"]="El campo de Telefono es obligatorio";
+                ModelState.AddModelError("UsuarioId.Telefono", "El campo Telefono es obligatorio.");
+                return RedirectToAction(nameof(Create));
+            }else if(!Expresiones.ValidarTelefono(a.UsuarioId.Telefono.ToString())){
+                TempData["Mensaje"]="El Telefono no es valido";
+                ModelState.AddModelError("UsuarioId.Telefono", "El Telefono no es valido.");
+                return RedirectToAction(nameof(Create));
+            }
+            if (a.Id < 0 && string.IsNullOrEmpty(a.UsuarioId.Mail))
+            {
+                TempData["Mensaje"]="El campo de Mail es obligatorio";
+                ModelState.AddModelError("UsuarioId.Mail", "El campo Mail es obligatorio.");
+                return RedirectToAction(nameof(Create));
+            }else if(a.Id < 0 && !Expresiones.ValidarMail(a.UsuarioId.Mail)){
+                 TempData["Mensaje"]="El Mail es invalido, deberia estar en formato 'example@example.com'";
+                ModelState.AddModelError("UsuarioId.Mail", "El Mail es invalido");
                 return RedirectToAction(nameof(Create));
             }
             if(String.IsNullOrEmpty(a.Clave)){
@@ -109,11 +166,7 @@ namespace inmobiliaria.Controllers
             }
             try
             {
-                 if (User.IsInRole("Empleado"))
-                {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                        return RedirectToAction(nameof(Index), "Home"); 
-                }
+                var UR = new UsuariosRepositorio();
                 var AR = new AdministradoresRepositorio();
                  string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                         password: a.Clave,
@@ -123,7 +176,14 @@ namespace inmobiliaria.Controllers
                         numBytesRequested: 250 / 8
                     ));
                 a.Clave=hashed;
-                AR.Alta(a);
+                 try{
+                    a.Id = UR.Alta(a.UsuarioId);
+                    AR.Alta(a);
+                    TempData["Mensaje"] = "Se creo con exito el administrador y el usuario nuevo con id: "+a.Id;
+                }catch{
+                    AR.Alta(a);
+                    TempData["Mensaje"] = "Se creo con exito el administrador y se asocio al usuario con id: "+a.Id;
+                }
                 if(a.AvatarFileName != null && a.Id>0){
                     string wwwPath = environment.WebRootPath;
                     string path = Path.Combine(wwwPath, "Uploads");

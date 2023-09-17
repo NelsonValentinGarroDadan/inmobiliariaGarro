@@ -196,6 +196,23 @@ namespace inmobiliaria.Controllers
                     ER.Alta(e);
                     TempData["Mensaje"] = "Se creo con exito el empleado y se asocio al usuario con id: "+e.Id;
                 }
+                if(e.AvatarFileName != null && e.Id>0){
+                    string wwwPath = environment.WebRootPath;
+                    string path = Path.Combine(wwwPath, "Uploads");
+                    if(!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    string fileName = "avatar_" + e.Id + Path.GetExtension(e.AvatarFileName.FileName);
+                    string pathCompleto = Path.Combine(path, fileName);
+                    e.Avatar = Path.Combine("/Uploads", fileName);
+                    using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
+                    {
+                        e.AvatarFileName.CopyTo(stream);
+                    }
+                    ER.CambiarAvatar(e);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception E)
