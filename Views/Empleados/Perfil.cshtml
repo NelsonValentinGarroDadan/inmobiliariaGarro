@@ -10,43 +10,43 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2 text-light">
-            @Html.DisplayNameFor(model => model.Id)
+            Id
         </dt>
         <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt class = "col-sm-2 text-light">
-            @Html.DisplayNameFor(model => model.UsuarioId.DNI)
+            DNI
         </dt>
         <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.UsuarioId.DNI)
         </dd>
         <dt class = "col-sm-2 text-light">
-            @Html.DisplayNameFor(model => model.UsuarioId.Nombre)
+            Nombre
         </dt>
         <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.UsuarioId.Nombre)
         </dd>
         <dt class = "col-sm-2 text-light">
-            @Html.DisplayNameFor(model => model.UsuarioId.Apellido)
+            Apellido
         </dt>
         <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.UsuarioId.Apellido)
         </dd>
         <dt class = "col-sm-2 text-light">
-            @Html.DisplayNameFor(model => model.UsuarioId.Telefono)
+            Telefono
         </dt>
         <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.UsuarioId.Telefono)
         </dd>
         <dt class = "col-sm-2 text-light">
-            @Html.DisplayNameFor(model => model.UsuarioId.Mail)
+            Mail
         </dt>
         <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.UsuarioId.Mail)
         </dd>
         <dt class = "col-sm-2 text-light">
-            @Html.DisplayNameFor(model => model.Avatar)
+            Avatar
         </dt>
         <dd class = "col-sm-10 text-light">
              @if(Model.Avatar == null)
@@ -61,6 +61,6 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id=@Model.Id asp-controller="Usuarios"><button type="button" class="btn btn-warning" >Editar Perfil<i class="fa-regular fa-pen-to-square"></i></i></button></a>
-    <a asp-action="CambiarClave" asp-route-id=@Model.Id><button type="button" class="btn btn-light" >Cambiar Clave <i class="fa-solid fa-lock"></i></button></a>
-    <a asp-action="CambiarAvatar" asp-route-id=@Model.Id><button type="button" class="btn btn-light" >Cambiar Avatar <i class="fa-solid fa-lock"></i></button></a>
+    <a asp-action="CambiarClave" asp-route-id=@Model.Id><button type="button" class="btn btn-warning" >Cambiar Clave <i class="fa-solid fa-lock"></i></button></a>
+    <a asp-action="CambiarAvatar" asp-route-id=@Model.Id><button type="button" class="btn btn-warning" >Cambiar Avatar <i class="fa-brands fa-github-alt"></i></button></a>
 </div>

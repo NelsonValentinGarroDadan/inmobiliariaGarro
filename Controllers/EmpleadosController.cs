@@ -112,7 +112,7 @@ namespace inmobiliaria.Controllers
                TempData["Mensaje"]="Debes Elegir un Usuario o crear uno, no puede hacer ambos";
                 return RedirectToAction(nameof(Create)); 
             }
-            if(e.Id < 0 && e.UsuarioId.DNI < 0 && String.IsNullOrEmpty(e.UsuarioId.Nombre) && !String.IsNullOrEmpty(e.UsuarioId.Apellido) && e.UsuarioId.Telefono != 0 && !String.IsNullOrEmpty(e.UsuarioId.Mail))
+            if(e.Id < 0 && e.UsuarioId.DNI < 0 && String.IsNullOrEmpty(e.UsuarioId.Nombre) && String.IsNullOrEmpty(e.UsuarioId.Apellido) && e.UsuarioId.Telefono < 0 && String.IsNullOrEmpty(e.UsuarioId.Mail))
             {
                 TempData["Mensaje"]="Debes Elegir un Usuario o crear uno";
                 return RedirectToAction(nameof(Create)); 
@@ -178,7 +178,7 @@ namespace inmobiliaria.Controllers
             }
             try
             {
-                 
+                var UR = new UsuariosRepositorio();
                 var ER = new EmpleadosRepositorio();
                 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                         password: e.Clave,
@@ -188,8 +188,14 @@ namespace inmobiliaria.Controllers
                         numBytesRequested: 250 / 8
                     ));
                 e.Clave=hashed;
-                ER.Alta(e);
-                TempData["Id"] = e.Id;
+                try{
+                    e.Id = UR.Alta(e.UsuarioId);
+                    ER.Alta(e);
+                    TempData["Mensaje"] = "Se creo con exito el empleado y el usuario nuevo con id: "+e.Id;
+                }catch{
+                    ER.Alta(e);
+                    TempData["Mensaje"] = "Se creo con exito el empleado y se asocio al usuario con id: "+e.Id;
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception E)

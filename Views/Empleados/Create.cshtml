@@ -11,8 +11,8 @@
     
     <div class="col-md-4">
         <form asp-action="Create" id="create" style="max-width: 500px;" enctype="multipart/form-data">
-            <h5 class="text-center text-light">Eliga un usuario</h5>
             <div class="form-group">
+                <h5 class="text-center text-light">Eliga un usuario</h5>
                 <select asp-for="Id" class="form-select">
                     @{foreach(var item in lista){
                         @:<option value=@item.Id @(item.Id==ViewBag.Id ? "selected" : "" )>@item.toString()</option>
