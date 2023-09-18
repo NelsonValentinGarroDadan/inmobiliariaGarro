@@ -1,56 +1,53 @@
-@model inmobiliaria.Models.Administradores
+@model inmobiliaria.Models.Empleados
 
 @{
-    ViewData["Title"] = "Cambiar Clave";
+    ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center text-light">Cambiar Contraseña</h1>
-<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Ver Administradores</button></a></h4>
-<hr />
+<h1 class="text-center text-light">Cambiar Contraseña</h1><hr />
 <div class="container d-flex flex-column justify-content-between align-items-center">
     <div class="col-md-4">
-        <form asp-action="CambiarClave" id="update" style="max-width: 500px;" >
+        <form asp-action="CambiarClave" id="update">
             <div class="form-group">
                  <dl class="row">
                     <dt class = "col-sm-5 text-light">
-                        Id
+                        @Html.DisplayNameFor(model => model.Id)
                     </dt>
                     <dd class = "col-sm-7 text-light" asp-for="Id UsuarioId">
                         @Html.DisplayFor(model => model.Id)
                     </dd>
                     <dt class = "col-sm-5 text-light">
-                        DNI
+                        @Html.DisplayNameFor(model => model.UsuarioId.DNI)
                     </dt>
                     <dd class = "col-sm-7 text-light">
                         @Html.DisplayFor(model => model.UsuarioId.DNI)
                     </dd>
                     <dt class = "col-sm-5 text-light">
-                        Nombre
+                        @Html.DisplayNameFor(model => model.UsuarioId.Nombre)
                     </dt>
                     <dd class = "col-sm-7 text-light">
                         @Html.DisplayFor(model => model.UsuarioId.Nombre)
                     </dd>
                     <dt class = "col-sm-5 text-light">
-                        Apellido
+                        @Html.DisplayNameFor(model => model.UsuarioId.Apellido)
                     </dt>
                     <dd class = "col-sm-7 text-light">
                         @Html.DisplayFor(model => model.UsuarioId.Apellido)
                     </dd>
                 </dl>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label class="control-label text-light" >Clave Nueva</label>
-                <input type="password" class="form-control" id="clave" required/>
+                <input type="password" class="form-control"  id="clave" required/>
             </div>
             <div class="form-group">
                 <label asp-for="Clave" class="control-label text-light" >Confirmar Clave</label>
-                <input type="password" asp-for="Clave" class="form-control" id="claveConfirm" required/>
+                <input type="password" asp-for="Clave" class="form-control"  id="claveConfirm" required/>
                 <span asp-validation-for="Clave" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" style="width:100%;" />
+                <input type="submit" value="Guardar" class="btn btn-primary" style="width:100%;"/>
             </div>
         </form>
     </div>
 </div>
-

@@ -180,10 +180,10 @@ namespace inmobiliaria.Controllers
                         numBytesRequested: 250 / 8
                     ));
                 a.Clave=hashed;
-                 try{
+                if(UR.Existe(a.UsuarioId)){
                     AR.Alta(a);
                     TempData["Mensaje"] = "Se creo con exito el administrador y se asocio al usuario con id: "+a.Id;
-                }catch{
+                }else{
                     a.Id = UR.Alta(a.UsuarioId);
                     AR.Alta(a);
                     TempData["Mensaje"] = "Se creo con exito el administrador y el usuario nuevo con id: "+a.Id;
@@ -317,7 +317,6 @@ namespace inmobiliaria.Controllers
                         return RedirectToAction(nameof(Index), "Home"); 
             }
                 var AR = new AdministradoresRepositorio();
-                bool bol =false;
                 if(a.AvatarFileName != null && a.Id>0){
                     string wwwPath = environment.WebRootPath;
                     string path = Path.Combine(wwwPath, "Uploads");
@@ -333,8 +332,9 @@ namespace inmobiliaria.Controllers
                     {
                         a.AvatarFileName.CopyTo(stream);
                     }
-                    bol=AR.CambiarAvatar(a);
+                    
                 }
+                var bol=AR.CambiarAvatar(a);
                 if(bol)
                 {
                   TempData["Mensaje"]="Se modifico el avatar con exito";

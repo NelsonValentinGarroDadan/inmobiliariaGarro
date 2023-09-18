@@ -164,14 +164,18 @@ namespace inmobiliaria.Controllers
         // GET: Usuarios/Edit/5
         public ActionResult Edit(int id)
         {
-            var UR = new UsuariosRepositorio();
-            var ER = new EmpleadosRepositorio();
             if (User.IsInRole("Empleado"))
 			{
-				TempData["Mensaje"] = "No tienes permiso de ver este contenido";
-                return RedirectToAction(nameof(Index), "Home"); 
-                
+				if (User.Identity.Name != id+"")
+                {
+                    TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                    return RedirectToAction(nameof(Index), "Home"); 
+                }
+					
 			}
+            var UR = new UsuariosRepositorio();
+            var ER = new EmpleadosRepositorio();
+            
             ViewBag.Id = TempData["Id"];
             if(TempData.ContainsKey("Mensaje"))
             {
@@ -188,9 +192,12 @@ namespace inmobiliaria.Controllers
         {
             if (User.IsInRole("Empleado"))
 			{
-				TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                return RedirectToAction(nameof(Index), "Home"); 
-                
+				if (User.Identity.Name != id+"")
+                {
+                    TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                    return RedirectToAction(nameof(Index), "Home"); 
+                }
+					
 			}
              //Validaciones de Entrada 
             if (string.IsNullOrEmpty(u.DNI))
@@ -254,7 +261,7 @@ namespace inmobiliaria.Controllers
                 if(bol)
                 {
                   TempData["Mensaje"]="Se modifico con exito la entidad id:"+u.Id;
-                return RedirectToAction(nameof(Index));  
+                return RedirectToAction(nameof(Index),"Home");  
                 }else
                 {
                     throw new Exception("No se pudo modificar con exito la entidad con id:"+u.Id);

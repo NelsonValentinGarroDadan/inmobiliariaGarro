@@ -1,13 +1,13 @@
-@model inmobiliaria.Models.Administradores
+@model inmobiliaria.Models.Empleados
 
 @{
-    ViewData["Title"] = "Perfil Administrador";
+    ViewData["Title"] = "Perfil Empleado";
 }
 
-<h1 class="text-center text-light">Perfil de Administrador</h1> 
+<h1 class="text-center text-light">Perfil de Empleado</h1> 
 <hr />
 <div class="container d-flex flex-column justify-content-between align-items-center">
-   <div class="container d-flex">
+    <div class="container d-flex">
         <div class="container">
             <p class = "text-light text-center">
                 Id
@@ -67,3 +67,4 @@
         <a asp-action="CambiarAvatar" asp-route-id=@Model.Id><button type="button" class="btn btn-warning" >Cambiar Avatar <i class="fa-brands fa-github-alt"></i></button></a>
     </div>
 </div>
+

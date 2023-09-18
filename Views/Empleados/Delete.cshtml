@@ -1,43 +1,43 @@
-@model inmobiliaria.Models.Administradores
+@model inmobiliaria.Models.Empleados
 
 @{
-    ViewData["Title"] = "Eleminar Administrador";
+    ViewData["Title"] = "Delete";
 }
 
-<h1 class="text-center text-light">Eliminar Administrador</h1> 
-<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Ver Administradores</button></a></h4>
+<h1 class="text-center text-light">Eliminar Empleado</h1> 
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Ver Empleados</button></a></h4>
 <hr />
 <div class="container d-flex flex-column justify-content-between align-items-center">
-    <p class="text-light"><b>Advertecia:</b> Enviando este formulario se eliminara al administrador, pero no los datos de su usuario. Para eliminar tambien los datos de su Usuario debe ir al apartado de  @Html.ActionLink("Usuarios", "Index", "Usuarios")</p>
+    <p  class="text-light"><b>Advertecia:</b> Enviando este formulario se eliminara al empleado, pero no los datos de su usuario. Para eliminar tambien los datos de su Usuario debe ir al apartado de  @Html.ActionLink("Usuarios", "Index", "Usuarios")</p>
+    <hr />
     <dl class="row">
                     <dt class = "col-sm-3 text-light">
-                       Id
+                        @Html.DisplayNameFor(model => model.Id)
                     </dt>
                     <dd class = "col-sm-9 text-light" asp-for="Id UsuarioId">
                         @Html.DisplayFor(model => model.Id)
                     </dd>
                     <dt class = "col-sm-3 text-light">
-                        DNI
+                        @Html.DisplayNameFor(model => model.UsuarioId.DNI)
                     </dt>
                     <dd class = "col-sm-9 text-light">
                         @Html.DisplayFor(model => model.UsuarioId.DNI)
                     </dd>
                     <dt class = "col-sm-3 text-light">
-                        Nombre
+                        @Html.DisplayNameFor(model => model.UsuarioId.Nombre)
                     </dt>
                     <dd class = "col-sm-9 text-light">
                         @Html.DisplayFor(model => model.UsuarioId.Nombre)
                     </dd>
                     <dt class = "col-sm-3 text-light">
-                       Apellido
+                        @Html.DisplayNameFor(model => model.UsuarioId.Apellido)
                     </dt>
                     <dd class = "col-sm-9 text-light">
                         @Html.DisplayFor(model => model.UsuarioId.Apellido)
                     </dd>
     </dl>
-   
+    
+    <form asp-action="Delete" id="delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+    </form>
 </div>
-
-<form asp-action="Delete" id="delete">
-    <input type="submit" value="Eliminar" class="btn btn-danger" />
-</form>

@@ -254,7 +254,7 @@ public class UsuariosRepositorio
         
     }
     
-    private bool Existe(Usuarios u){
+    public bool Existe(Usuarios u){
         return ObtenerXId(u.Id) != null;
     }
 }
