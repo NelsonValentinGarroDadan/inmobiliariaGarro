@@ -1,0 +1,49 @@
+@model inmobiliaria.Models.Inquilinos
+
+@{
+    ViewData["Title"] = "Editar Inquilino";
+}
+<h1 class="text-center text-light">Editar Inquilino</h1> 
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"> </i> Ver Inquilinos</button></a></h4>
+
+<hr />
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <div class="col-md-4">
+        <form asp-action="Edit" id="update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label text-light">Id</label>
+                <p class="text-light">@Html.DisplayFor(model => model.Id)</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId.DNI" class="control-label text-light">DNI</label>
+                <input asp-for="UsuarioId.DNI" class="form-control " placeholder="@Html.DisplayFor(model => model.UsuarioId.DNI)" required/>
+                <span asp-validation-for="UsuarioId.DNI" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId.Nombre" class="control-label text-light">Nombre</label>
+                <input asp-for="UsuarioId.Nombre" class="form-control" placeholder="@Html.DisplayFor(model => model.UsuarioId.Nombre)" required/>
+                <span asp-validation-for="UsuarioId.Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId.Apellido" class="control-label text-light">Apellido</label>
+                <input asp-for="UsuarioId.Apellido" class="form-control" placeholder="@Html.DisplayFor(model => model.UsuarioId.Apellido)" required/>
+                <span asp-validation-for="UsuarioId.Apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId.Telefono" class="control-label text-light">Telefono</label>
+                <input asp-for="UsuarioId.Telefono" class="form-control" placeholder="@Html.DisplayFor(model => model.UsuarioId.Telefono)"required/>
+                <span asp-validation-for="UsuarioId.Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId.Mail" class="control-label text-light">Mail</label>
+                <input asp-for="UsuarioId.Mail" class="form-control" placeholder="@Html.DisplayFor(model => model.UsuarioId.Mail)" required/>
+                <span asp-validation-for="UsuarioId.Mail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" style="width:100%;"/>
+            </div>
+        </form>
+    </div>
+</div>
+

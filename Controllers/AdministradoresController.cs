@@ -184,6 +184,8 @@ namespace inmobiliaria.Controllers
                     AR.Alta(a);
                     TempData["Mensaje"] = "Se creo con exito el administrador y se asocio al usuario con id: "+a.Id;
                 }else{
+                    a.UsuarioId.Nombre = char.ToUpper(a.UsuarioId.Nombre[0]) + a.UsuarioId.Nombre.Substring(1).ToLower();
+                    a.UsuarioId.Apellido = char.ToUpper(a.UsuarioId.Apellido[0]) + a.UsuarioId.Apellido.Substring(1).ToLower();
                     a.Id = UR.Alta(a.UsuarioId);
                     AR.Alta(a);
                     TempData["Mensaje"] = "Se creo con exito el administrador y el usuario nuevo con id: "+a.Id;

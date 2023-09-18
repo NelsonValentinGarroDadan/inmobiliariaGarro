@@ -196,6 +196,8 @@ namespace inmobiliaria.Controllers
                     ER.Alta(e);
                     TempData["Mensaje"] = "Se creo con exito el empleado y se asocio al usuario con id: "+e.Id;
                 }else{
+                    e.UsuarioId.Nombre = char.ToUpper(e.UsuarioId.Nombre[0]) + e.UsuarioId.Nombre.Substring(1).ToLower();
+                    e.UsuarioId.Apellido = char.ToUpper(e.UsuarioId.Apellido[0]) + e.UsuarioId.Apellido.Substring(1).ToLower();
                     e.Id = UR.Alta(e.UsuarioId);
                     ER.Alta(e);
                     TempData["Mensaje"] = "Se creo con exito el empleado y el usuario nuevo con id: "+e.Id;

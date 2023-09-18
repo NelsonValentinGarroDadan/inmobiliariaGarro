@@ -174,7 +174,6 @@ namespace inmobiliaria.Controllers
 					
 			}
             var UR = new UsuariosRepositorio();
-            var ER = new EmpleadosRepositorio();
             
             ViewBag.Id = TempData["Id"];
             if(TempData.ContainsKey("Mensaje"))
@@ -242,16 +241,6 @@ namespace inmobiliaria.Controllers
             }
             try
             {   
-                 
-                if (User.IsInRole("Empleado"))
-                {
-                    if (User.Identity.Name != id+"")
-                    {
-                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
-                        return RedirectToAction(nameof(Index), "Home"); 
-                    }
-                        
-                }
                 var UR = new UsuariosRepositorio();
                 var ER = new EmpleadosRepositorio();
                 //Primera Mayuscula Nombre y Apelldo
