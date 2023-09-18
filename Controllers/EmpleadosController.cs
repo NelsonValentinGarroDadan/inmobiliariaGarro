@@ -107,17 +107,17 @@ namespace inmobiliaria.Controllers
                         return RedirectToAction(nameof(Index), "Home"); 
             }
             //Validaciones de Entrada 
-            if(e.Id > 0 && (e.UsuarioId.DNI > 0 || !String.IsNullOrEmpty(e.UsuarioId.Nombre) || !String.IsNullOrEmpty(e.UsuarioId.Apellido) || e.UsuarioId.Telefono != 0 || !String.IsNullOrEmpty(e.UsuarioId.Mail)))
+            if(e.Id > 0 && (!String.IsNullOrEmpty(e.UsuarioId.DNI) || !String.IsNullOrEmpty(e.UsuarioId.Nombre) || !String.IsNullOrEmpty(e.UsuarioId.Apellido) || e.UsuarioId.Telefono != 0 || !String.IsNullOrEmpty(e.UsuarioId.Mail)))
             {
                TempData["Mensaje"]="Debes Elegir un Usuario o crear uno, no puede hacer ambos";
                 return RedirectToAction(nameof(Create)); 
             }
-            if(e.Id < 0 && e.UsuarioId.DNI < 0 && String.IsNullOrEmpty(e.UsuarioId.Nombre) && String.IsNullOrEmpty(e.UsuarioId.Apellido) && e.UsuarioId.Telefono < 0 && String.IsNullOrEmpty(e.UsuarioId.Mail))
+            if(e.Id < 0 && String.IsNullOrEmpty(e.UsuarioId.DNI) && String.IsNullOrEmpty(e.UsuarioId.Nombre) && String.IsNullOrEmpty(e.UsuarioId.Apellido) && e.UsuarioId.Telefono < 0 && String.IsNullOrEmpty(e.UsuarioId.Mail))
             {
                 TempData["Mensaje"]="Debes Elegir un Usuario o crear uno";
                 return RedirectToAction(nameof(Create)); 
             }
-            if (e.Id < 0 && e.UsuarioId.DNI < 0)
+            if (e.Id < 0 && String.IsNullOrEmpty(e.UsuarioId.DNI))
             {
                 TempData["Mensaje"]="El campo de DNI es obligatorio";
                 ModelState.AddModelError("UsuarioId.DNI", "El campo DNI es obligatorio.");

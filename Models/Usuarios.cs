@@ -8,7 +8,7 @@ public class Usuarios
     [Display(Name = "Codigo int.")]
     public int Id { get; set;}
     [Required]
-    public int DNI { get; set;}
+    public string DNI { get; set;}
     [Required]
     public string? Nombre { get; set;}
     [Required]

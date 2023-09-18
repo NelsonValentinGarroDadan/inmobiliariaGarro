@@ -20,7 +20,7 @@ public class UsuariosRepositorio
                             Usuarios r = new Usuarios
                             {
                                 Id= reader.GetInt32("Id"),
-                                DNI = reader.GetInt32("DNI"),
+                                DNI = reader.GetString("DNI"),
                                 Nombre = reader.GetString("Nombre"),
                                 Apellido = reader.GetString("Apellido"),
                                 Telefono = reader.GetInt64("Telefono"),
@@ -57,7 +57,7 @@ public class UsuariosRepositorio
                         res = new Usuarios
                         {
                                 Id = reader.GetInt32("Id"),
-                                DNI = reader.GetInt32("DNI"),
+                                DNI = reader.GetString("DNI"),
                                 Nombre = reader.GetString("Nombre"),
                                 Apellido = reader.GetString("Apellido"),
                                 Telefono = reader.GetInt64("Telefono"),
@@ -185,7 +185,7 @@ public class UsuariosRepositorio
                         Usuario = new Usuarios
                         {
                                 Id = reader.GetInt32("Id"),
-                                DNI = reader.GetInt32("DNI"),
+                                DNI = reader.GetString("DNI"),
                                 Nombre = reader.GetString("Nombre"),
                                 Apellido = reader.GetString("Apellido"),
                                 Telefono = reader.GetInt64("Telefono"),

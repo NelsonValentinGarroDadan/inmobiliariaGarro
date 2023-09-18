@@ -9,7 +9,7 @@ public class Expresiones
     private static string eApellido = @"^[A-Za-z']+$";
     private static string eTelefono = @"^[0-9]+$";
     private static string eMail = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-    private static string eDNI= @"^[0-9]{7,8}$";
+    private static string eDNI= @"^(?:\d{7,8}|[A-Z]{1,2}\d{6})$";
     private static string eClave = @"^(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$";
     private static string eLatitud = @"^-?([0-9]|[1-8][0-9]|90)(\.[0-9]{1,6})?$";
     private static string eLongitud = @"^-?([0-9]|[1-9][0-9]|1[0-7][0-9]|180)(\.[0-9]{1,6})?$";

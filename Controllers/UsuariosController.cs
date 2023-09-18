@@ -93,13 +93,13 @@ namespace inmobiliaria.Controllers
                 
 			}
             //Validaciones de Entrada 
-            if (u.DNI < 0)
+            if (string.IsNullOrEmpty(u.DNI))
             {
                 TempData["Mensaje"]="El campo de DNI es obligatorio";
                 ModelState.AddModelError("DNI", "El campo DNI es obligatorio.");
                 return RedirectToAction(nameof(Create));
             }else if( !Expresiones.ValidarDNI(u.DNI.ToString())){
-                TempData["Mensaje"]="El DNI no es valido, se permiten solo 7 o 8 caracteres";
+                TempData["Mensaje"]="El DNI o pasaporte no es valido";
                 ModelState.AddModelError("DNI", "El DNI no es valido, se permiten solo 7 o 8 caracteres.");
                 return RedirectToAction(nameof(Create));
             }
@@ -193,7 +193,7 @@ namespace inmobiliaria.Controllers
                 
 			}
              //Validaciones de Entrada 
-            if (u.DNI < 0)
+            if (string.IsNullOrEmpty(u.DNI))
             {
                 TempData["Mensaje"]="El campo de DNI es obligatorio";
                 ModelState.AddModelError("DNI", "El campo DNI es obligatorio.");
