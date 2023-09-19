@@ -1,0 +1,39 @@
+@model inmobiliaria.Models.Pagos
+
+@{
+    ViewData["Title"] = "Eliminar Pago";
+}
+<h1 class="text-center text-light">Eliminar Pago</h1> 
+<h4><a asp-action="Index" ><button type="button" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Ver Pagos</button></a></h4>
+<div class="container d-flex flex-column justify-content-between align-items-center">
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2 text-light">
+            Id
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            Fecha
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            Contrato
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.ActionLink("Inquilino: Id: "+@Model.ContratoId.InquilinoId.Id+"|Nombre: "+@Model.ContratoId.InquilinoId.UsuarioId.Nombre+" "+@Model.ContratoId.InquilinoId.UsuarioId.Apellido+"- Inmueble: Id: "+@Model.ContratoId.InmuebleId.Id+"|Direccion: "+@Model.ContratoId.InmuebleId.Direccion, "Details","Contratos", new {id=Model.ContratoId.Id })
+        </dd>
+        <dt class = "col-sm-2 text-light">
+            Importe
+        </dt>
+        <dd class = "col-sm-10 text-light">
+            @Html.DisplayFor(model => model.Importe)
+        </dd>
+    </dl>
+</div>
+<form asp-action="Delete" id="delete">
+    <input type="submit" value="Eliminar" class="btn btn-danger" />
+</form>

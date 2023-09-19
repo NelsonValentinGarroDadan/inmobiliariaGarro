@@ -1,0 +1,81 @@
+@model IEnumerable<inmobiliaria.Models.Pagos>
+
+@{
+    ViewData["Title"] = "Pagos";
+    var Contratos = ViewBag.Contratos;
+}
+
+<h1 class="text-center text-light">Pagos</h1>
+<p>
+    <a asp-action="Create"><button type="button" class="btn btn-secondary">Crear Pago <i class="fa-solid fa-plus"></i></button></a>
+</p>
+<p class="text-light">Filtros: </p>
+<div class="container">
+    
+    <form asp-action="Index" class="row">
+        <div class="form-group col-10">
+                <label class="control-label text-light">Contratos</label>
+                <select class="form-select" name="filtroContrato">
+                    <option value=0>Eliga un Contrato</option>
+                    @{foreach(var item in Contratos){ 
+                        @:<option value=@item.Id @(item.Id==ViewBag.filtroContrato ? "selected" : "") >Id:@item.Id Inquilino: Id: @item.InquilinoId.Id|Nombre: @item.InquilinoId.UsuarioId.Nombre @item.InquilinoId.UsuarioId.Apellido - Inmueble: Id: @item.InmuebleId.Id|Direccion: @item.InmuebleId.Direccion</option>
+                       
+                    }
+                    }
+                </select>
+        </div>
+        <div class="form-group col-2">
+            @if(ViewBag.filtroContrato!=0){
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Renovar Pago">
+                    <a asp-action="RenovarPago" asp-route-id=@ViewBag.filtroContrato><button type="button" class="btn btn-light" ><i class="fa-solid fa-comments-dollar"></i><i class="fa-solid fa-plus"></i></button></a>
+                </span>
+            }
+        </div>    
+        <div class="form-group">
+            <input type="submit" value="Filtrar" class="btn btn-primary"/>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-light">
+                Id
+            </th>
+            <th class="text-light">
+                Fecha
+            </th>
+            <th class="text-light">
+                Contrato
+            </th>
+            <th class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-light">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-light"> 
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td class="text-light">
+                @Html.ActionLink("Inquilino: Id: "+@item.ContratoId.InquilinoId.Id+"|Nombre: "+@item.ContratoId.InquilinoId.UsuarioId.Nombre+" "+@item.ContratoId.InquilinoId.UsuarioId.Apellido+"- Inmueble: Id: "+@item.ContratoId.InmuebleId.Id+"|Direccion: "+@item.ContratoId.InmuebleId.Direccion, "Details","Contratos", new {id=item.ContratoId.Id })
+            </td>
+            <td class="text-light  d-flex flex-row justify-content-around align-items-center">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Detalles del Pago">
+                    <a asp-action="Details" asp-route-id=@item.Id><button type="button" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></button></a>
+                </span>
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Editar Pago">
+                    <a asp-action="Edit" asp-route-id=@item.Id><button type="button" class="btn btn-warning" ><i class="fa-regular fa-pen-to-square"></i></button></a>
+                </span>
+                
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Eliminar Pago">
+                    <a asp-action="Delete" asp-route-id=@item.Id><button type="button" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button></a>
+                </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -144,7 +144,7 @@ public class PagosRepositorio
                         {
                             string sql = $"UPDATE Pagos SET " +
                                         $"Fecha=@Fecha,ContratoId=@ContratoId,Importe=@Importe"+
-                                        $"WHERE Id=@Id";
+                                        $" WHERE Id=@Id";
                             using (MySqlCommand command = new MySqlCommand (sql,connection))
                             {
                                 command.CommandType = CommandType.Text;

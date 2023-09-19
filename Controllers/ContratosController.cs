@@ -346,18 +346,34 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult RenovarContrato(int id){
             var CR = new ContratosRepositorio();
-            var C = CR.ObtenerXId(id);
-            TempData["Inmueble"] = C.InmuebleId.Id;
-            TempData["Inquilino"] = C.InquilinoId.Id;
-            TempData["FechaInicio"] = C.FechaFin.ToString("yyyy-MM-ddTHH:mm");
+            try{
+                var C = CR.ObtenerXId(id);
+                TempData["Inmueble"] = C.InmuebleId.Id;
+                TempData["Inquilino"] = C.InquilinoId.Id;
+                TempData["FechaInicio"] = C.FechaFin.ToString("yyyy-MM-ddTHH:mm");
+            }catch(Exception e){
+                TempData["Mensaje"] = e.Message;
+                Console.WriteLine(e.Message);
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction(nameof(Create));
         }
         [Authorize]
         public ActionResult FinalizarContrato(int id){
             var CR = new ContratosRepositorio();
-            var C = CR.ObtenerXId(id);
-            C.FechaFin = DateTime.Now;
-            CR.FinalizarContrato(C);
+            try{
+                var C = CR.ObtenerXId(id);
+                C.FechaFin = DateTime.Now;
+                var bol = CR.FinalizarContrato(C);
+                if(bol){
+                    TempData["Mensaje"] = "Se finalizo con exito el contrato";
+                }else{
+                    TempData["Mensaje"] = "No se finalizo con exito el contrato";
+                }
+            }catch(Exception e){
+                TempData["Mensaje"] = e.Message;
+                Console.WriteLine(e.Message);
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -365,7 +381,11 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
-            
+            if (User.IsInRole("Empleado"))
+                {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+            }
             ViewBag.Id = TempData["Id"];
             if(TempData.ContainsKey("Mensaje"))
             {
@@ -383,6 +403,11 @@ namespace inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Contratos c)
         {
+            if (User.IsInRole("Empleado"))
+                {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+            }
              try
             {
                 var CR = new ContratosRepositorio();

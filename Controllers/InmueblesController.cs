@@ -398,7 +398,11 @@ namespace inmobiliaria.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
-            
+            if (User.IsInRole("Empleado"))
+                {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+            }
             ViewBag.Id = TempData["Id"];
             if(TempData.ContainsKey("Mensaje"))
             {
@@ -416,6 +420,11 @@ namespace inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Inmuebles i)
         {
+            if (User.IsInRole("Empleado"))
+                {
+                        TempData["Mensaje"] = "No tienes permiso de realizar esta accion";
+                        return RedirectToAction(nameof(Index), "Home"); 
+            }
              try
             {
                 var IR = new InmueblesRepositorio();
