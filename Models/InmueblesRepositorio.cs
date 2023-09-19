@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
             try{
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection()))
                 {
-                    string sql = @"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleIdFROM Inmuebles;";
+                    string sql = @"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,PropietarioId,TipoEstadoId,TipoInmuebleId FROM Inmuebles;";
                     using (MySqlCommand command= new MySqlCommand(sql,connection))
                     {
                         command.CommandType = CommandType.Text;
@@ -31,9 +31,9 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                                 TipoUsoId = TUR.ObtenerXId(reader.GetInt32("TipoUsoId")),
                                 CA = reader.GetInt32("CA"),
                                 Precio = reader.GetDecimal("Precio"),
-                                TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
                                 PropietarioId = PR.ObtenerXId(reader.GetInt32("PropietarioId")),
                                 TipoInmuebleId = TIR.ObtenerXId(reader.GetInt32("TipoInmuebleId")),
+                                TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
                             };
                             res.Add(r);
                         }
@@ -57,7 +57,7 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
             try{
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection()))
             {
-                string sql = @$"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleId FROM Inmuebles WHERE Id = @Id;";
+                string sql = @$"SELECT Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,PropietarioId,TipoInmuebleId,TipoEstadoId FROM Inmuebles WHERE Id = @Id;";
                 using (MySqlCommand command= new MySqlCommand(sql,connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -75,9 +75,9 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                             TipoUsoId = TUR.ObtenerXId(reader.GetInt32("TipoUsoId")),
                             CA = reader.GetInt32("CA"),
                             Precio = reader.GetDecimal("Precio"),
-                            TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
                             PropietarioId = PR.ObtenerXId(reader.GetInt32("PropietarioId")),
                             TipoInmuebleId = TIR.ObtenerXId(reader.GetInt32("TipoInmuebleId")),
+                            TipoEstadoId = TER.ObtenerXId(reader.GetInt32("TipoEstadoId")),
 
                         };
                     }
@@ -97,36 +97,29 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
         public int Alta(Inmuebles i)
         {
             int res = -1;
-            try{
                 if(Existe(i)){
                     throw new Exception("Ya existe este inmueble");
                 }
                 using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection())){
-                string sql = "INSERT INTO Inmuebles (Id,Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,TipoEstadoId,PropietarioId,TipoInmuebleId)"+
-                            $"Values (@Id,@Direccion,@TipoUsoId,@CA,@Longitud,@Latitud,@Precio,@TipoEstadoId,@PropietarioId,@TipoInmuebleId);"+
+                string sql = "INSERT INTO Inmuebles (Direccion,TipoUsoId,CA,Longitud,Latitud,Precio,PropietarioId,TipoInmuebleId,TipoEstadoId)"+
+                            $"Values (@Direccion,@TipoUsoId,@CA,@Longitud,@Latitud,@Precio,@PropietarioId,@TipoInmuebleId,@TipoEstadoId);"+
                             $"SELECT LAST_INSERT_ID();";
                 using (MySqlCommand command = new MySqlCommand(sql,connection)){
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@Id",i.Id);
                     command.Parameters.AddWithValue("@Direccion",i.Direccion);
                     command.Parameters.AddWithValue("@TipoUsoId",i.TipoUsoId.Id);
                     command.Parameters.AddWithValue("@CA",i.CA);
                     command.Parameters.AddWithValue("@Longitud",i.Longitud);
                     command.Parameters.AddWithValue("@Latitud",i.Latitud);
                     command.Parameters.AddWithValue("@Precio",i.Precio);
-                    command.Parameters.AddWithValue("@TipoEstadoId",101);
                     command.Parameters.AddWithValue("@PropietarioId",i.PropietarioId.Id);
                     command.Parameters.AddWithValue("@TipoInmuebleId",i.TipoInmuebleId.Id);
+                    command.Parameters.AddWithValue("@TipoEstadoId",i.TipoEstadoId.Id);
                     connection.Open();
                     i.Id = Convert.ToInt32(command.ExecuteScalar());
                     res=i.Id;
                     connection.Close();
                 }
-            }
-            }catch(Exception e)
-            {
-                Console.Write(e.Message);
-                throw e;
             }
             
             return res;
@@ -165,8 +158,8 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                         {
                             string sql = $"UPDATE Inmuebles SET " +
                                         $"Direccion=@Direccion,TipoUsoId=@TipoUsoId,CA=@CA,Longitud=@Longitud,"+
-                                        "Latitud=@Latitud,Precio=@Precio,TipoEstadoId=@TipoEstadoId,PropietarioId=@PropietarioId,"+
-                                        "TipoInmuebleId=@TipoInmuebleId"+
+                                        "Latitud=@Latitud,Precio=@Precio,PropietarioId=@PropietarioId,"+
+                                        "TipoInmuebleId=@TipoInmuebleId,TipoEstadoId=@TipoEstadoId"+
                                         $" WHERE Id=@Id;";
                             using (MySqlCommand command = new MySqlCommand (sql,connection))
                             {
@@ -178,9 +171,9 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
                                 command.Parameters.AddWithValue("@Longitud",i.Longitud);
                                 command.Parameters.AddWithValue("@Latitud",i.Latitud);
                                 command.Parameters.AddWithValue("@Precio",i.Precio);
-                                command.Parameters.AddWithValue("@TipoEstadoId",i.TipoEstadoId.Id);
                                 command.Parameters.AddWithValue("@PropietarioId",i.PropietarioId.Id);
                                 command.Parameters.AddWithValue("@TipoInmuebleId",i.TipoInmuebleId.Id);
+                                command.Parameters.AddWithValue("@TipoEstadoId",i.TipoEstadoId.Id);
                                 connection.Open();
                                 res = command.ExecuteNonQuery() != 0;
                                 connection.Close();
@@ -191,9 +184,8 @@ using MySql.Data.MySqlClient;public class InmueblesRepositorio
             
         
         }
-
         public bool Deshabilitar(Inmuebles i){
-            i.TipoEstadoId.Id= 102;
+            i.TipoEstadoId.Id = 102;
             return Modificacion(0,i);
         }
         private bool Existe(Inmuebles i){

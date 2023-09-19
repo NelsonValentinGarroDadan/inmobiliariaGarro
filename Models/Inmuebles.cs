@@ -16,11 +16,11 @@ public class Inmuebles
     [Required]
     public string Latitud { get; set;}
     [Required]
+    public TiposEstados TipoEstadoId {get; set;}
+    [Required]
     public string Longitud { get; set;}
     [Required]
     public decimal Precio { get; set;}
-    [Required]
-    public TiposEstados TipoEstadoId { get; set;}
     [Required]
     public Propietarios PropietarioId { get; set;}
     [Required]

@@ -67,14 +67,15 @@ public class PropietariosRepositorio
             }
             using(MySqlConnection connection = new MySqlConnection(Connection.stringConnection())){
                 string sql = "INSERT INTO Propietarios (Id,UsuarioId)"+
-                            $"Values (@Id,@UsuarioId);";
+                            $"Values (@Id,@UsuarioId);"+
+                            $"SELECT LAST_INSERT_ID();";
                 using (MySqlCommand command = new MySqlCommand(sql,connection)){
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@Id",A.Id);
                     command.Parameters.AddWithValue("@UsuarioId",A.Id);
                     connection.Open();
-                    command.ExecuteScalar();
-                    res = A.Id != -1;
+                    A.Id = Convert.ToInt32(command.ExecuteScalar());
+                    res = A.Id != 0;
                     connection.Close();
                 }
             }
@@ -107,7 +108,7 @@ public class PropietariosRepositorio
             return res;
         }
       
-        private bool Existe(Propietarios A){
+        public bool Existe(Propietarios A){
             var u = ObtenerXId(A.Id);
             return  u != null;
         }
