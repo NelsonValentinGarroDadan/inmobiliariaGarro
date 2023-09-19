@@ -36,7 +36,7 @@
                 <select  class="form-select" name="filtroPropietario">
                     <option value=0>Eliga un Propietario</option>
                     @{foreach(var item in Usuarios){
-                            @:<option value=@item.Id @(item.Id==ViewBag.filtroPropietario ? "selected" : "")>@item.toString()</option>
+                            @:<option value=@item.Id @(item.Id==ViewBag.filtroPropietario ? "selected" : "")>Id: @item.Id | FullName: @item.Nombre @item.Apellido | DNI: @item.DNI</option>
                         }
                     }
                 </select>
