@@ -105,6 +105,7 @@
             </th>
             <th class="text-light"></th>
             <th class="text-light"></th>
+            <th class="text-light"></th>
         </tr>
     </thead>
     <tbody>
@@ -149,6 +150,13 @@
                     </span> 
                 }
             </td>
+            <th class="text-light">
+                @if(item.TipoEstadoId.Id != 102){
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Crear Contrato">
+                        <a asp-action="CrearContrato" asp-route-id=@item.Id><button type="button" class="btn btn-light" ><i class="fa-solid fa-file-circle-plus"></i></button></a>
+                    </span>
+                }
+            </th>
         </tr>
 }
     </tbody>

@@ -92,9 +92,18 @@ namespace inmobiliaria.Controllers
             }
             var UR = new UsuariosRepositorio();
             var IR = new InmueblesRepositorio();
+            var CR = new ContratosRepositorio();
             ViewBag.Usuarios= UR.ObtenerTodos();
-            ViewBag.Inmuebles= IR.ObtenerTodos();
-
+            var todosI = IR.ObtenerTodos();
+            var todosC = CR.ObtenerTodos();
+            List<Inmuebles> x = new List<Inmuebles>();
+            for(int i = 0 ; i<todosI.Count;i++){
+                   if(todosI[i].TipoEstadoId.Id != 102){
+                        x.Add(todosI[i]);
+                    } 
+                
+            }
+            ViewBag.Inmuebles = x;
             var C = new Contratos();
             return View(C);
         }

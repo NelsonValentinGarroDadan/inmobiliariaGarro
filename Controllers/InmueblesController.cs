@@ -200,7 +200,7 @@ namespace inmobiliaria.Controllers
                 return RedirectToAction(nameof(Create));
             }
             if(i.CA < 0){
-                TempData["Mensaje"]="El campo CA es obligatorio";
+                TempData["Mensaje"]="El campo Cantidad de Ambientes es obligatorio";
                 ModelState.AddModelError("CA", "El campo CA es obligatorio");
                 return RedirectToAction(nameof(Create));
             }
@@ -393,7 +393,11 @@ namespace inmobiliaria.Controllers
                 return RedirectToAction(nameof(Edit));
             }
         }
-
+         [Authorize]
+        public ActionResult CrearContrato(int id){
+            TempData["Inmueble"] = id;
+            return RedirectToAction("Create","Contratos");
+        }
         // GET: Inmuebles/Delete/5
         [Authorize]
         public ActionResult Delete(int id)

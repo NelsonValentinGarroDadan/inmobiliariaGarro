@@ -70,6 +70,7 @@
             </td>
             <td class="text-light"></td>
             <td class="text-light"></td>
+            <td class="text-light"></td>
         </tr>
     </thead>
     <tbody>
@@ -105,17 +106,17 @@
                 </span>
             </td>
             <td class="text-light">
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Finalizar Contrato">
+                        <a asp-action="RenovarContrato" asp-route-id=@item.Id><button type="button" class="btn btn-light" ><i class="fa-solid fa-file-circle-plus"></i></button></a>
+                    </span>
+            </td> 
+            <td class="text-light">
                 @{if(DateTime.Compare(@item.FechaFin,DateTime.Now)>0){
                     <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Renovar Contrato">
                         <a asp-action="FinalizarContrato" asp-route-id=@item.Id><button type="button" class="btn btn-success" ><i class="fa-solid fa-file-circle-check"></i></button></a>
                     </span>
-                }else{
-                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Finalizar Contrato">
-                        <a asp-action="RenovarContrato" asp-route-id=@item.Id><button type="button" class="btn btn-light" ><i class="fa-solid fa-file-circle-plus"></i></button></a>
-                    </span>
                 }}
-            </td> 
-            
+            </td>
         </tr>
 }
     </tbody>
