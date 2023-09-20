@@ -279,18 +279,12 @@ namespace inmobiliaria.Controllers
             }
                 var IR = new InquilinosRepositorio();
                 var bol = IR.Baja(i);
-                if(bol)
-                {
-                    TempData["Mensaje"] = "Se elimino con exito la entidad";
-                    return RedirectToAction(nameof(Index));
-
-                }else{
-                    throw new Exception("No se logro eliminar la entidad id: "+id);
-                }
+                TempData["Mensaje"] = "Se elimino con exito la entidad";
+                return RedirectToAction(nameof(Index));
             }
             catch(Exception E)
             {
-                TempData["Mensaje"] = E.Message;
+                TempData["Mensaje"] = "No puedes eliminar este Inquilino porque esta asociado a un Contrato";
                 Console.WriteLine(E.Message);
                 return RedirectToAction(nameof(Delete));
             }

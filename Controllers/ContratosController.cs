@@ -363,10 +363,16 @@ namespace inmobiliaria.Controllers
             var CR = new ContratosRepositorio();
             try{
                 var C = CR.ObtenerXId(id);
+                string Mensaje ="Se finalizo con exito el contrato. El monto total es de $"+C.Importe;
+                DateTime puntoMedio = C.FechaInicio + TimeSpan.FromTicks((C.FechaFin - C.FechaInicio).Ticks / 2);
+                if(puntoMedio < DateTime.Now){
+                    C.Importe = C.Importe *3;
+                    Mensaje="Se finalizo con exito el contrato, pero se debe abonar una multa. El monto total es de $"+C.Importe;
+                }
                 C.FechaFin = DateTime.Now;
                 var bol = CR.FinalizarContrato(C);
                 if(bol){
-                    TempData["Mensaje"] = "Se finalizo con exito el contrato";
+                    TempData["Mensaje"] = Mensaje;
                 }else{
                     TempData["Mensaje"] = "No se finalizo con exito el contrato";
                 }
@@ -435,7 +441,7 @@ namespace inmobiliaria.Controllers
             }
             catch(Exception e)
             {
-                TempData["Mensaje"] = e.Message;
+                TempData["Mensaje"] = "No puedes borrar este Contrato, porque esta asociado a un Pago";
                 Console.WriteLine(e.Message);
                 return RedirectToAction(nameof(Delete));
             }

@@ -194,7 +194,7 @@ namespace inmobiliaria.Controllers
             }
             catch(Exception e)
             {
-                TempData["Mensaje"] = e.Message;
+                TempData["Mensaje"] = "No puedes eliminar este Tipo de Inmueble porque esta asociado a un Inmueble";
                 Console.WriteLine(e.Message);
                 return RedirectToAction(nameof(Delete));
             }

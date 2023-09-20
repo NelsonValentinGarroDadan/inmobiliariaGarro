@@ -302,18 +302,13 @@ namespace inmobiliaria.Controllers
                 var UR = new UsuariosRepositorio();
                 
                 var bol = UR.Baja(UR.ObtenerXId(id));
-                if(bol)
-                {
-                    TempData["Mensaje"] = "Se elimino con exito la entidad";
-                    return RedirectToAction(nameof(Index));
+                TempData["Mensaje"] = "Se elimino con exito la entidad";
+                return RedirectToAction(nameof(Index));
 
-                }else{
-                    throw new Exception("No se logro eliminar la entidad id: "+id);
-                }
             }
             catch(Exception e)
             {
-                TempData["Mensaje"] = e.Message;
+                TempData["Mensaje"] ="No puedes eliminar este Usuario porque esta asociado a un Admin,Empleado,Propietario o inquilino";
                 Console.WriteLine(e.Message);
                 return RedirectToAction(nameof(Delete));
             }

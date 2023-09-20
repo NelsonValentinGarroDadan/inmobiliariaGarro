@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-09-2023 a las 19:38:30
+-- Tiempo de generación: 20-09-2023 a las 00:42:49
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -39,8 +39,7 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`Id`, `UsuarioId`, `Clave`, `Avatar`) VALUES
-(36, 36, 'gCMSJ+9GSOk7hRlOgd3dd92s3UVNlZXoEbj5f/VnRg==', '/Uploads\\avatar_36.jpeg'),
-(40, 40, '+SJgGM0cMOtHx7IEuc1+HBSn7GwrZVVL9dtp3gfARQ==', NULL);
+(36, 36, 'gCMSJ+9GSOk7hRlOgd3dd92s3UVNlZXoEbj5f/VnRg==', '/Uploads\\avatar_36.png');
 
 -- --------------------------------------------------------
 
@@ -52,7 +51,6 @@ CREATE TABLE `contratos` (
   `Id` int(11) NOT NULL,
   `FechaInicio` date NOT NULL,
   `FechaFin` date NOT NULL,
-  `TipoEstadoId` int(11) NOT NULL,
   `InquilinoId` int(11) NOT NULL,
   `InmuebleId` int(11) NOT NULL,
   `Importe` decimal(10,0) NOT NULL
@@ -62,8 +60,9 @@ CREATE TABLE `contratos` (
 -- Volcado de datos para la tabla `contratos`
 --
 
-INSERT INTO `contratos` (`Id`, `FechaInicio`, `FechaFin`, `TipoEstadoId`, `InquilinoId`, `InmuebleId`, `Importe`) VALUES
-(23, '2023-09-02', '2023-09-29', 106, 34, 11, '50000');
+INSERT INTO `contratos` (`Id`, `FechaInicio`, `FechaFin`, `InquilinoId`, `InmuebleId`, `Importe`) VALUES
+(27, '2023-09-02', '2023-09-19', 58, 17, '50001'),
+(28, '2023-09-23', '2023-09-30', 58, 17, '50000');
 
 -- --------------------------------------------------------
 
@@ -77,13 +76,6 @@ CREATE TABLE `empleados` (
   `Clave` varchar(250) NOT NULL,
   `Avatar` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `empleados`
---
-
-INSERT INTO `empleados` (`Id`, `UsuarioId`, `Clave`, `Avatar`) VALUES
-(35, 35, 'gCMSJ+9GSOk7hRlOgd3dd92s3UVNlZXoEbj5f/VnRg==', NULL);
 
 -- --------------------------------------------------------
 
@@ -101,18 +93,15 @@ CREATE TABLE `inmuebles` (
   `Latitud` varchar(50) NOT NULL,
   `Longitud` varchar(50) NOT NULL,
   `TipoEstadoId` int(11) NOT NULL,
-  `TipoInmuebleId` int(11) NOT NULL,
-  `FechaInicio` date NOT NULL,
-  `FechaFin` date NOT NULL
+  `TipoInmuebleId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `inmuebles`
 --
 
-INSERT INTO `inmuebles` (`Id`, `CA`, `Direccion`, `Precio`, `PropietarioId`, `TipoUsoId`, `Latitud`, `Longitud`, `TipoEstadoId`, `TipoInmuebleId`, `FechaInicio`, `FechaFin`) VALUES
-(10, 2, 'Lic 5', '70000', 34, 12, '-35.463', '-180.0', 101, 1, '2023-09-01', '2023-09-30'),
-(11, 7, 'Lic 22', '23000000', 41, 12, '-35.463', '-180.0', 101, 1, '2023-09-01', '2023-09-30');
+INSERT INTO `inmuebles` (`Id`, `CA`, `Direccion`, `Precio`, `PropietarioId`, `TipoUsoId`, `Latitud`, `Longitud`, `TipoEstadoId`, `TipoInmuebleId`) VALUES
+(17, 3, 'Modulo 13', '70000', 57, 12, '-35.463', '-180.0', 101, 1);
 
 -- --------------------------------------------------------
 
@@ -130,8 +119,7 @@ CREATE TABLE `inquilinos` (
 --
 
 INSERT INTO `inquilinos` (`Id`, `UsuarioId`) VALUES
-(34, 34),
-(1, 35);
+(58, 58);
 
 -- --------------------------------------------------------
 
@@ -151,7 +139,7 @@ CREATE TABLE `pagos` (
 --
 
 INSERT INTO `pagos` (`Id`, `ContratoId`, `Fecha`, `Importe`) VALUES
-(4, 23, '0001-01-19', '46000000');
+(5, 27, '0001-01-25', '1000');
 
 -- --------------------------------------------------------
 
@@ -169,8 +157,7 @@ CREATE TABLE `propietarios` (
 --
 
 INSERT INTO `propietarios` (`Id`, `UsuarioId`) VALUES
-(34, 34),
-(41, 41);
+(57, 57);
 
 -- --------------------------------------------------------
 
@@ -189,10 +176,7 @@ CREATE TABLE `tiposestados` (
 
 INSERT INTO `tiposestados` (`Id`, `Descripcion`) VALUES
 (101, 'Habilitado'),
-(102, 'DesHabilitado'),
-(104, 'Vigente'),
-(105, 'Vencido'),
-(106, 'Abonado');
+(102, 'DesHabilitado');
 
 -- --------------------------------------------------------
 
@@ -242,7 +226,7 @@ INSERT INTO `tiposusos` (`Id`, `Descripcion`) VALUES
 
 CREATE TABLE `usuarios` (
   `Id` int(11) NOT NULL,
-  `DNI` int(11) NOT NULL,
+  `DNI` varchar(30) NOT NULL,
   `Nombre` varchar(50) NOT NULL,
   `Apellido` varchar(50) NOT NULL,
   `Telefono` bigint(32) NOT NULL,
@@ -254,11 +238,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Id`, `DNI`, `Nombre`, `Apellido`, `Telefono`, `Mail`) VALUES
-(34, 44643100, 'Valentín', 'Garro', 3675432, 'nicvoaleauri@gmail.com'),
-(35, 445765, 'benjamin', 'devechi', 435654, 'nicovaleauri@gmail.com'),
-(36, 44643100, 'Nelson', 'Garro', 2664910392, 'nelsonvgarro@sanluis.edu.ar'),
-(40, 44643100, 'Fulanito', 'Quiroga', 2664910392, 'kiknashyt27@gmail.com'),
-(41, 24983199, 'Mairela', 'Dadan', 2664729009, 'nicovaleauri@gmail.com');
+(36, '44643100', 'Nelson', 'Garro', 2664910392, 'nelsonvgarro@sanluis.edu.ar'),
+(57, '12345678', 'Felicito', 'Quiroga', 12345678, 'example@example.com'),
+(58, '12345678', 'Anastasio', 'Segundo', 123456789, 'example@example.com');
 
 --
 -- Índices para tablas volcadas
@@ -276,7 +258,6 @@ ALTER TABLE `administradores`
 --
 ALTER TABLE `contratos`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `IdEstado` (`TipoEstadoId`),
   ADD KEY `InmuebleId` (`InmuebleId`),
   ADD KEY `contratos_ibfk_2` (`InquilinoId`);
 
@@ -350,43 +331,43 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `administradores`
 --
 ALTER TABLE `administradores`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de la tabla `contratos`
 --
 ALTER TABLE `contratos`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `inquilinos`
 --
 ALTER TABLE `inquilinos`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `propietarios`
 --
 ALTER TABLE `propietarios`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `tiposestados`
@@ -410,7 +391,7 @@ ALTER TABLE `tiposusos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- Restricciones para tablas volcadas
@@ -427,7 +408,6 @@ ALTER TABLE `administradores`
 --
 ALTER TABLE `contratos`
   ADD CONSTRAINT `contratos_ibfk_2` FOREIGN KEY (`InquilinoId`) REFERENCES `inquilinos` (`Id`),
-  ADD CONSTRAINT `contratos_ibfk_3` FOREIGN KEY (`TipoEstadoId`) REFERENCES `tiposestados` (`Id`),
   ADD CONSTRAINT `contratos_ibfk_4` FOREIGN KEY (`InmuebleId`) REFERENCES `inmuebles` (`Id`);
 
 --

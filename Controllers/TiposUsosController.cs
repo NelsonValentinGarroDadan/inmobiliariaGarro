@@ -183,20 +183,14 @@ namespace inmobiliaria.Controllers
             }
                 var TUR = new TiposUsosRepositorio();
                 var bol = TUR.Baja(tu);
-                if(bol)
-                {
-                    TempData["Mensaje"] = "Se elimino con exito la entidad";
-                    return RedirectToAction(nameof(Index));
-
-                }else{
-                    throw new Exception("No se logro eliminar la entidad id: "+id);
-                }
+                TempData["Mensaje"] = "Se elimino con exito la entidad";
+                return RedirectToAction(nameof(Index));
 
                 
             }
             catch(Exception e)
             {
-                TempData["Mensaje"] = e.Message;
+                TempData["Mensaje"] = "No puedes eliminar este Tipo de Uso porque esta asociado a un Inmueble";
                 Console.WriteLine(e.Message);
                 return RedirectToAction(nameof(Delete));
             }
