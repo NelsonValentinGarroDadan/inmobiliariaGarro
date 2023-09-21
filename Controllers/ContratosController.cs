@@ -230,6 +230,7 @@ namespace inmobiliaria.Controllers
                     TempData["Mensaje"]="Se dio de alta el contrato y se asocio al inquilino con id:"+c.InquilinoId.Id;
                 }else if(UR.Existe(c.InquilinoId.UsuarioId)){
                     INR.Alta(c.InquilinoId);
+                    c.InquilinoId.Id = c.InquilinoId.UsuarioId.Id;
                     CR.Alta(c);
                     TempData["Mensaje"]="Se dio de alta el contrato y se creo al inquilino con id:"+c.InquilinoId.Id;
                 }else{

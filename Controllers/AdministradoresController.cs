@@ -180,6 +180,7 @@ namespace inmobiliaria.Controllers
                         numBytesRequested: 250 / 8
                     ));
                 a.Clave=hashed;
+                a.UsuarioId.Id = a.Id;
                 if(UR.Existe(a.UsuarioId)){
                     AR.Alta(a);
                     TempData["Mensaje"] = "Se creo con exito el administrador y se asocio al usuario con id: "+a.Id;

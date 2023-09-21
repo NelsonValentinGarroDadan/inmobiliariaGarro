@@ -248,11 +248,13 @@ namespace inmobiliaria.Controllers
                 i.PropietarioId.UsuarioId.Id = i.PropietarioId.Id == null? 0: i.PropietarioId.Id;
                 i.PropietarioId.Id = i.PropietarioId.Id == null? 0: i.PropietarioId.Id;
                 i.TipoEstadoId = new TiposEstados{Id= 101};
+                Console.WriteLine(PR.Existe(i.PropietarioId));
                 if(PR.Existe(i.PropietarioId)){
                     IR.Alta(i);
                     TempData["Mensaje"]="Se dio de alta el inmueble y se asocio al propietario con id:"+i.PropietarioId.Id;
                 }else if(UR.Existe(i.PropietarioId.UsuarioId)){
                     PR.Alta(i.PropietarioId);
+                    i.PropietarioId.Id = i.PropietarioId.UsuarioId.Id;
                     IR.Alta(i);
                     TempData["Mensaje"]="Se dio de alta el inmueble y se creo al propietario con id:"+i.PropietarioId.Id;
                 }else{

@@ -139,7 +139,7 @@ namespace inmobiliaria.Controllers
                 p.UsuarioId.Id = p.Id;
                 if(UR.Existe(p.UsuarioId)){
                     PR.Alta(p);
-                    TempData["Mensaje"] = "Se creo con exito el inquilino y se asocio al usuario con id: "+p.Id;
+                    TempData["Mensaje"] = "Se creo con exito el inquilino y se asocio al usuario con id: "+p.UsuarioId.Id;
                 }else{
                     p.UsuarioId.Nombre = char.ToUpper(p.UsuarioId.Nombre[0]) + p.UsuarioId.Nombre.Substring(1).ToLower();
                     p.UsuarioId.Apellido = char.ToUpper(p.UsuarioId.Apellido[0]) + p.UsuarioId.Apellido.Substring(1).ToLower();

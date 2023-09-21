@@ -139,13 +139,13 @@ namespace inmobiliaria.Controllers
                 i.UsuarioId.Id = i.Id;
                 if(UR.Existe(i.UsuarioId)){
                     IR.Alta(i);
-                    TempData["Mensaje"] = "Se creo con exito el inquilino y se asocio al usuario con id: "+i.Id;
+                    TempData["Mensaje"] = "Se creo con exito el inquilino y se asocio al usuario con id: "+i.UsuarioId.Id;
                 }else{
                     i.UsuarioId.Nombre = char.ToUpper(i.UsuarioId.Nombre[0]) + i.UsuarioId.Nombre.Substring(1).ToLower();
                     i.UsuarioId.Apellido = char.ToUpper(i.UsuarioId.Apellido[0]) + i.UsuarioId.Apellido.Substring(1).ToLower();
                     i.Id = UR.Alta(i.UsuarioId);
                     IR.Alta(i);
-                    TempData["Mensaje"] = "Se creo con exito el inquilino y el usuario nuevo con id: "+i.Id;
+                    TempData["Mensaje"] = "Se creo con exito el inquilino y el usuario nuevo con id: "+i.UsuarioId.Id;
                     
                 }
                 
