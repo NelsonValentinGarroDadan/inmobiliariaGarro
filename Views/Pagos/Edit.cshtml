@@ -23,7 +23,7 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label  class="control-label text-light">Contratos</label>
+                <label  class="control-label text-light">Contrato</label>
                 <select asp-for="ContratoId.Id" class="form-select">
                     @foreach(var item in Contratos){
                             @:<option value=@item.Id @(item.Id==Model.ContratoId.Id ? "selected" : "")>Id:@item.Id Inquilino: Id: @item.InquilinoId.Id|Nombre: @item.InquilinoId.UsuarioId.Nombre @item.InquilinoId.UsuarioId.Apellido - Inmueble: Id: @item.InmuebleId.Id|Direccion: @item.InmuebleId.Direccion</option>

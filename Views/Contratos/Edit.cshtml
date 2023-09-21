@@ -15,17 +15,17 @@
         <form asp-action="Edit" id="update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label text-light"></label>
+                <label asp-for="Id" class="control-label text-light">Id</label>
                 <p class="text-light">@Model.Id</p>
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaInicio" class="control-label text-light" ></label>
+                <label asp-for="FechaInicio" class="control-label text-light" >Fecha de Inicio</label>
                 <input asp-for="FechaInicio" class="form-control" />
                 <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaFin" class="control-label text-light" ></label>
+                <label asp-for="FechaFin" class="control-label text-light" >Fecha de Fin</label>
                 <input asp-for="FechaFin" class="form-control" />
                 <span asp-validation-for="FechaFin" class="text-danger"></span>
             </div>
@@ -50,7 +50,7 @@
                     </select>
                 </div>
             <div class="form-group">
-                <label asp-for="Importe" class="control-label text-light"></label>
+                <label asp-for="Importe" class="control-label text-light">Importe</label>
                 <input asp-for="Importe" class="form-control" />
                 <span asp-validation-for="FechaFin" class="text-danger"></span>
             </div>
