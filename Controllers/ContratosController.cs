@@ -375,7 +375,7 @@ namespace inmobiliaria.Controllers
                 var C = CR.ObtenerXId(id);
                 string Mensaje ="Se finalizo con exito el contrato. El monto total es de $"+C.Importe;
                 DateTime puntoMedio = C.FechaInicio + TimeSpan.FromTicks((C.FechaFin - C.FechaInicio).Ticks / 2);
-                if(puntoMedio < DateTime.Now){
+                if(puntoMedio > DateTime.Now ){
                     C.Importe = C.Importe *3;
                     Mensaje="Se finalizo con exito el contrato, pero se debe abonar una multa. El monto total es de $"+C.Importe;
                 }
